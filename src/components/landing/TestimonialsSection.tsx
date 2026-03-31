@@ -1,72 +1,72 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-
 const testimonials = [
   {
     quote:
       "Grace a HandiConnect, nous avons decouvert l'equitation adaptee pour notre fils. Une experience inoubliable !",
     author: "Sophie M.",
     city: "Paris",
+    offsetClass: "mt-0",
   },
   {
     quote:
       "Enfin un espace ou je peux echanger avec des parents qui comprennent notre quotidien.",
     author: "Karim B.",
     city: "Marseille",
+    offsetClass: "md:mt-8",
   },
   {
     quote:
       "La communaute nous a aide a trouver un restaurant accessible pour l'anniversaire de ma fille.",
     author: "Claire D.",
     city: "Lyon",
+    offsetClass: "md:mt-4",
   },
 ];
 
 export function TestimonialsSection() {
-  const [current, setCurrent] = useState(0);
-
-  const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % testimonials.length);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
-  }, [next]);
-
-  const t = testimonials[current];
-
   return (
-    <section className="py-24 px-4 bg-hc-cream">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="font-heading text-3xl font-bold text-hc-text mb-16">
-          Ce que dit la communaute
-        </h2>
-
-        <div className="bg-white rounded-2xl p-8 shadow-sm min-h-[200px] flex flex-col items-center justify-center">
-          <p className="text-lg italic text-hc-text leading-relaxed mb-6">
-            &ldquo;{t.quote}&rdquo;
-          </p>
-          <p className="font-semibold text-hc-text">
-            {t.author},{" "}
-            <span className="font-normal text-hc-text-light">{t.city}</span>
-          </p>
+    <section className="py-28 px-4 bg-hc-cream-dark">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <span className="uppercase tracking-widest text-xs text-hc-sage font-semibold">
+            Temoignages
+          </span>
+          <h2 className="font-heading text-3xl md:text-4xl font-bold text-hc-text mt-3">
+            Ce que dit la communaute
+          </h2>
         </div>
 
-        {/* Dot navigation */}
-        <div className="flex items-center justify-center gap-2 mt-8">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrent(index)}
-              aria-label={`Voir le temoignage ${index + 1}`}
-              className={`w-3 h-3 rounded-full transition-colors ${
-                index === current
-                  ? "bg-hc-blue"
-                  : "bg-hc-blue/25 hover:bg-hc-blue/50"
-              }`}
-            />
+        {/* Testimonials grid with staggered offset */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((t, index) => (
+            <div
+              key={t.author}
+              className={`${t.offsetClass} animate-fade-in-up`}
+              style={{ animationDelay: `${(index + 1) * 0.1}s` }}
+            >
+              <div className="card-editorial p-8 relative">
+                {/* Decorative quotation mark */}
+                <span
+                  className="absolute top-4 left-6 text-6xl leading-none text-hc-orange/20 font-heading select-none pointer-events-none"
+                  aria-hidden="true"
+                >
+                  &#10077;
+                </span>
+
+                {/* Quote */}
+                <p className="italic text-lg font-heading text-hc-text leading-relaxed mt-10 mb-6">
+                  {t.quote}
+                </p>
+
+                {/* Author */}
+                <div>
+                  <p className="font-semibold text-hc-text">{t.author}</p>
+                  <p className="text-sm text-hc-text-muted">{t.city}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>

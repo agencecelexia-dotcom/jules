@@ -40,7 +40,7 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
   return (
     <article
       aria-label={`Publication de ${author?.name ?? "Utilisateur"}`}
-      className="bg-card rounded-2xl p-6 shadow-sm border border-border/50 card-hover"
+      className="card-editorial p-6"
     >
       {/* Header */}
       <div className="flex items-start gap-3">
@@ -67,17 +67,22 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
           <div className="flex items-center gap-2 flex-wrap">
             <Link
               href={`/profil/${post.authorId}`}
-              className="font-semibold text-sm hover:underline"
+              className="font-semibold text-[15px] hover:underline text-hc-text"
             >
               {author?.name ?? "Utilisateur"}
             </Link>
-            <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+            <span className={cn(
+              "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
+              post.type === "EXPERIENCE" || post.type === "STORY"
+                ? "bg-hc-orange-muted text-hc-orange"
+                : "bg-hc-blue-muted text-hc-blue"
+            )}>
               {POST_TYPE_LABELS[post.type]}
             </span>
           </div>
           <Link
             href={`/fil/${post.id}`}
-            className="text-xs text-muted-foreground hover:underline"
+            className="text-xs text-hc-text-muted hover:underline"
           >
             {formatDate(post.createdAt)}
           </Link>
@@ -86,7 +91,7 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
 
       {/* Content */}
       <div className="mt-3">
-        <p className="text-sm whitespace-pre-wrap">{displayContent}</p>
+        <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{displayContent}</p>
         {needsTruncation && !expanded && (
           <button
             type="button"

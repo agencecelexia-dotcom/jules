@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Outfit, DM_Sans } from "next/font/google";
+import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppProvider } from "@/components/providers/AppProvider";
 import { SkipLink } from "@/components/shared/SkipLink";
 import "./globals.css";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -35,8 +37,8 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${outfit.variable} ${dmSans.variable} h-full antialiased`}
-      style={{ ["--font-sans" as string]: `var(--font-dm-sans), sans-serif` }}
+      className={`${playfair.variable} ${sourceSans.variable} h-full antialiased`}
+      style={{ ["--font-sans" as string]: `var(--font-source-sans), "Source Sans 3", sans-serif` }}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <AppProvider>

@@ -56,31 +56,35 @@ export function Navbar() {
     pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
-      <nav className="flex items-center justify-between h-16 px-4 md:px-6 max-w-7xl mx-auto">
-        {/* Left: Logo */}
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-border/40">
+      <nav className="flex items-center justify-between h-16 px-6 max-w-7xl mx-auto">
+        {/* Left: Logo — editorial masthead */}
         <Link
           href="/"
-          className="font-heading text-hc-blue font-bold text-xl shrink-0"
+          className="font-heading text-hc-blue font-bold text-xl italic shrink-0"
         >
           HandiConnect
         </Link>
 
-        {/* Center: Desktop nav links */}
+        {/* Center: Desktop nav links — editorial uppercase tracking */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm transition-colors hover:bg-muted",
+                "relative flex items-center gap-1.5 px-3 py-2 text-sm font-medium uppercase tracking-wider transition-colors",
                 isActive(link.href)
-                  ? "text-primary font-semibold"
-                  : "text-muted-foreground"
+                  ? "text-hc-blue"
+                  : "text-hc-text-muted hover:text-hc-blue"
               )}
             >
               <link.icon className="size-4" />
               {link.label}
+              {/* Active dot indicator */}
+              {isActive(link.href) && (
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-hc-blue" />
+              )}
             </Link>
           ))}
         </div>
@@ -89,9 +93,9 @@ export function Navbar() {
         <div className="hidden md:flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger
-              className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring group"
             >
-              <Avatar size="default">
+              <Avatar size="default" className="w-9 h-9 transition-all group-hover:ring-2 group-hover:ring-hc-sage/30">
                 {currentUser.avatar ? (
                   <AvatarImage
                     src={currentUser.avatar}
@@ -107,8 +111,8 @@ export function Navbar() {
             <DropdownMenuContent align="end" sideOffset={8} className="w-56">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col gap-0.5">
-                  <p className="text-sm font-medium">{currentUser.name}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-sm font-medium text-hc-text">{currentUser.name}</p>
+                  <p className="text-xs text-hc-text-muted">
                     {currentUser.email}
                   </p>
                 </div>
@@ -140,13 +144,13 @@ export function Navbar() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuLabel>Changer de profil</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-xs text-hc-text-muted">Changer de profil</DropdownMenuLabel>
               {mockUsers.map((user) => (
                 <DropdownMenuItem
                   key={user.id}
                   onSelect={() => switchUser(user.id)}
                   className={cn(
-                    user.id === currentUser.id && "bg-accent"
+                    user.id === currentUser.id && "bg-hc-blue/5"
                   )}
                 >
                   <Avatar size="sm">
@@ -158,7 +162,7 @@ export function Navbar() {
                     </AvatarFallback>
                   </Avatar>
                   <span className="truncate">{user.name}</span>
-                  <span className="ml-auto text-xs text-muted-foreground">
+                  <span className="ml-auto text-xs text-hc-text-muted">
                     {user.role === "BUSINESS" ? "Pro" : "Famille"}
                   </span>
                 </DropdownMenuItem>
@@ -189,12 +193,12 @@ export function Navbar() {
             </SheetTrigger>
 
             <SheetContent side="right" showCloseButton={false}>
-              <SheetHeader className="border-b border-border pb-4">
+              <SheetHeader className="border-b border-border/40 pb-4">
                 <div className="flex items-center justify-between">
                   <SheetTitle>
                     <Link
                       href="/"
-                      className="font-heading text-hc-blue font-bold text-xl"
+                      className="font-heading text-hc-blue font-bold text-xl italic"
                       onClick={() => setSheetOpen(false)}
                     >
                       HandiConnect
@@ -222,10 +226,10 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setSheetOpen(false)}
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors hover:bg-muted",
+                      "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium uppercase tracking-wider transition-colors",
                       isActive(link.href)
-                        ? "text-primary font-semibold bg-primary/5"
-                        : "text-foreground"
+                        ? "text-hc-blue bg-hc-blue/5"
+                        : "text-hc-text-muted hover:text-hc-blue hover:bg-muted"
                     )}
                   >
                     <link.icon className="size-5" />
@@ -234,12 +238,12 @@ export function Navbar() {
                 ))}
               </div>
 
-              <Separator />
+              <Separator className="bg-border/40" />
 
               {/* Mobile user section */}
               <div className="flex flex-col gap-1 px-4 py-4">
                 <div className="flex items-center gap-3 px-3 py-2 mb-2">
-                  <Avatar size="default">
+                  <Avatar size="default" className="w-9 h-9">
                     {currentUser.avatar ? (
                       <AvatarImage
                         src={currentUser.avatar}
@@ -251,10 +255,10 @@ export function Navbar() {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="text-sm font-medium">
+                    <span className="text-sm font-medium text-hc-text">
                       {currentUser.name}
                     </span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-hc-text-muted">
                       {currentUser.email}
                     </span>
                   </div>
@@ -263,7 +267,7 @@ export function Navbar() {
                 <Link
                   href={`/profil/${currentUser.id}`}
                   onClick={() => setSheetOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-muted"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-hc-text-muted hover:text-hc-blue hover:bg-muted transition-colors"
                 >
                   <User className="size-5" />
                   Mon profil
@@ -272,7 +276,7 @@ export function Navbar() {
                 <Link
                   href="/mes-reservations"
                   onClick={() => setSheetOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-muted"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-hc-text-muted hover:text-hc-blue hover:bg-muted transition-colors"
                 >
                   <CalendarDays className="size-5" />
                   Mes reservations
@@ -282,7 +286,7 @@ export function Navbar() {
                   <Link
                     href="/tableau-de-bord"
                     onClick={() => setSheetOpen(false)}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm hover:bg-muted"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-hc-text-muted hover:text-hc-blue hover:bg-muted transition-colors"
                   >
                     <LayoutDashboard className="size-5" />
                     Tableau de bord
@@ -290,11 +294,11 @@ export function Navbar() {
                 )}
               </div>
 
-              <Separator />
+              <Separator className="bg-border/40" />
 
               {/* Mobile profile switcher */}
               <div className="flex flex-col gap-1 px-4 py-4">
-                <p className="px-3 text-xs font-medium text-muted-foreground mb-1">
+                <p className="px-3 text-xs font-medium text-hc-text-muted uppercase tracking-wider mb-1">
                   Changer de profil
                 </p>
                 {mockUsers.map((user) => (
@@ -306,7 +310,7 @@ export function Navbar() {
                     }}
                     className={cn(
                       "flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left hover:bg-muted w-full transition-colors",
-                      user.id === currentUser.id && "bg-accent"
+                      user.id === currentUser.id && "bg-hc-blue/5"
                     )}
                   >
                     <Avatar size="sm">
@@ -318,14 +322,14 @@ export function Navbar() {
                       </AvatarFallback>
                     </Avatar>
                     <span className="truncate">{user.name}</span>
-                    <span className="ml-auto text-xs text-muted-foreground">
+                    <span className="ml-auto text-xs text-hc-text-muted">
                       {user.role === "BUSINESS" ? "Pro" : "Famille"}
                     </span>
                   </button>
                 ))}
               </div>
 
-              <Separator />
+              <Separator className="bg-border/40" />
 
               {/* Mobile logout */}
               <div className="px-4 py-4">

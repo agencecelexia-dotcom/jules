@@ -4,17 +4,29 @@ import Link from "next/link";
 
 export function CTASection() {
   return (
-    <section className="py-24 px-4 bg-hc-blue">
-      <div className="max-w-2xl mx-auto text-center text-white">
-        <h2 className="font-heading text-3xl font-bold mb-6">
-          Pret a rejoindre HandiConnect ?
+    <section className="relative py-20 px-4 bg-hc-blue overflow-hidden">
+      {/* Subtle dot pattern overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.07]"
+        aria-hidden="true"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #FEFCF9 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+
+      <div className="relative z-10 max-w-2xl mx-auto text-center">
+        <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-6">
+          Pret a rejoindre la communaute ?
         </h2>
-        <p className="text-lg text-white/80 mb-10">
-          Creez votre compte gratuitement et decouvrez une communaute engagee.
+        <p className="text-lg text-white/80 mb-10 leading-relaxed">
+          Creez votre compte gratuitement et decouvrez une communaute engagee
+          pour l'inclusion.
         </p>
         <Link
           href="/connexion"
-          className="inline-flex items-center justify-center rounded-xl bg-white text-hc-blue px-8 py-4 text-lg font-semibold hover:bg-white/90 transition-colors"
+          className="inline-flex items-center justify-center rounded-full bg-white text-hc-blue px-10 py-4 font-semibold shadow-lg hover:shadow-xl hover:bg-hc-cream transition-all"
         >
           Creer mon compte gratuitement
         </Link>

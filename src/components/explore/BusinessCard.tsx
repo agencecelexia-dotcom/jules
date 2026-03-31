@@ -24,7 +24,7 @@ export function BusinessCard({ business }: BusinessCardProps) {
   return (
     <Link
       href={`/explorer/${business.id}`}
-      className="group block bg-card rounded-2xl overflow-hidden border border-border/50 card-hover transition-shadow hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      className="group block card-editorial card-hover overflow-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
@@ -48,11 +48,11 @@ export function BusinessCard({ business }: BusinessCardProps) {
       <div className="p-4 space-y-2.5">
         {/* Name + category */}
         <div className="space-y-1">
-          <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+          <h3 className="font-heading font-semibold text-foreground truncate group-hover:text-hc-blue transition-colors">
             {bp.companyName}
           </h3>
           {categoryLabel && (
-            <span className="inline-flex items-center rounded-full bg-primary/10 text-primary px-2 py-0.5 text-xs font-medium">
+            <span className="inline-flex items-center rounded-full bg-hc-blue-muted text-hc-blue px-3 py-1 text-xs font-medium">
               {categoryLabel}
             </span>
           )}
@@ -75,7 +75,7 @@ export function BusinessCard({ business }: BusinessCardProps) {
                 className={cn(
                   "h-3.5 w-3.5",
                   i <= Math.round(bp.averageRating)
-                    ? "fill-yellow-400 text-yellow-400"
+                    ? "fill-hc-gold text-hc-gold"
                     : "fill-none text-muted-foreground/30"
                 )}
                 aria-hidden="true"

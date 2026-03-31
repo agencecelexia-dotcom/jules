@@ -9,14 +9,14 @@ import { CTASection } from "@/components/landing/CTASection";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Top bar */}
-      <header className="flex items-center justify-between px-6 py-4 bg-white/80 backdrop-blur-sm border-b border-border sticky top-0 z-50">
+      {/* Top bar — transparent, fixed */}
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-transparent">
         <Link href="/" className="font-heading text-xl font-bold text-hc-blue">
           HandiConnect
         </Link>
         <Link
           href="/connexion"
-          className="inline-flex items-center justify-center rounded-xl bg-hc-blue text-white px-5 py-2 text-sm font-semibold hover:bg-hc-blue-light transition-colors"
+          className="inline-flex items-center justify-center rounded-full border border-hc-blue text-hc-blue px-5 py-2 text-sm font-semibold hover:bg-hc-blue hover:text-white transition-all"
         >
           Connexion
         </Link>
