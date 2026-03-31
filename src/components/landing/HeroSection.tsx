@@ -7,8 +7,8 @@ export function HeroSection() {
     <section className="relative min-h-[80vh] flex items-center overflow-hidden bg-gradient-to-b from-hc-cream via-[#FFF5E8] to-white">
       {/* Decorative circles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-20 -left-20 w-72 h-72 rounded-full bg-hc-orange/10" />
-        <div className="absolute top-1/3 -right-16 w-96 h-96 rounded-full bg-hc-blue/10" />
+        <div className="absolute -top-10 -left-10 w-72 h-72 rounded-full bg-hc-orange/10" />
+        <div className="absolute top-1/3 right-0 translate-x-1/4 w-96 h-96 rounded-full bg-hc-blue/10" />
         <div className="absolute bottom-10 left-1/4 w-56 h-56 rounded-full bg-hc-blue-light/10" />
       </div>
 

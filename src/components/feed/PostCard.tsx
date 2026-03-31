@@ -139,6 +139,11 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
                 src={src}
                 alt={`Image ${index + 1} de la publication`}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  target.style.display = "none";
+                }}
               />
             </div>
           ))}

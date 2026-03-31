@@ -37,10 +37,12 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     <div className="max-w-3xl mx-auto space-y-6">
       <ProfileHeader user={user} />
 
+      <hr className="border-border" />
+
       {/* Handicap badges for family profiles */}
       {isFamily && user.familyProfile && user.familyProfile.handicapTypes.length > 0 && (
-        <div className="space-y-2">
-          <h2 className="text-sm font-medium text-muted-foreground">
+        <div className="rounded-xl border bg-card p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-foreground">
             Types de handicap concernes
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -67,9 +69,9 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             );
           })}
           {user.businessProfile.isVerified && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-green-100 text-green-800 px-2.5 py-0.5 text-xs font-medium">
-              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-              Verifie
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 text-green-700 px-3 py-1 text-sm font-semibold">
+              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+              Etablissement verifie
             </span>
           )}
           {user.businessProfile.handicapTypesSupported.length > 0 && (

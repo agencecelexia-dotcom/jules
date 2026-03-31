@@ -20,6 +20,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
       value: stats.bookings.toString(),
       bgColor: "bg-blue-50",
       iconColor: "text-blue-600",
+      borderColor: "border-l-blue-500",
     },
     {
       icon: Euro,
@@ -27,6 +28,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
       value: formatPrice(stats.revenue),
       bgColor: "bg-green-50",
       iconColor: "text-green-600",
+      borderColor: "border-l-green-500",
     },
     {
       icon: Star,
@@ -34,6 +36,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
       value: stats.rating > 0 ? `${stats.rating.toFixed(1)}/5` : "N/A",
       bgColor: "bg-amber-50",
       iconColor: "text-amber-600",
+      borderColor: "border-l-orange-500",
     },
     {
       icon: MessageSquare,
@@ -41,6 +44,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
       value: stats.reviews.toString(),
       bgColor: "bg-purple-50",
       iconColor: "text-purple-600",
+      borderColor: "border-l-purple-500",
     },
   ];
 
@@ -49,7 +53,7 @@ export function StatsCards({ stats }: StatsCardsProps) {
       {cards.map((card) => (
         <div
           key={card.label}
-          className="rounded-xl border bg-card p-4 ring-1 ring-foreground/10"
+          className={`rounded-xl border border-l-4 ${card.borderColor} bg-card p-4 ring-1 ring-foreground/10`}
         >
           <div className="flex items-center gap-3">
             <div

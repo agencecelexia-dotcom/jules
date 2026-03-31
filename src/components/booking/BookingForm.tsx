@@ -139,6 +139,9 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 1: Select activity */}
       {step === 0 && (
         <fieldset className="space-y-3">
+          <h2 className="text-xl font-bold text-foreground">
+            Etape 1 : Activite
+          </h2>
           <legend className="text-lg font-semibold text-foreground mb-3">
             Choisissez une activite
           </legend>
@@ -208,6 +211,9 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 2: Select date */}
       {step === 1 && (
         <div className="space-y-3">
+          <h2 className="text-xl font-bold text-foreground">
+            Etape 2 : Date
+          </h2>
           <h3 className="text-lg font-semibold text-foreground">
             Choisissez une date
           </h3>
@@ -233,6 +239,9 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 3: Participants */}
       {step === 2 && selectedActivity && (
         <div className="space-y-4">
+          <h2 className="text-xl font-bold text-foreground">
+            Etape 3 : Participants
+          </h2>
           <h3 className="text-lg font-semibold text-foreground">
             Nombre de participants
           </h3>
@@ -274,6 +283,9 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 4: Summary */}
       {step === 3 && selectedActivity && selectedDate && (
         <div className="space-y-4">
+          <h2 className="text-xl font-bold text-foreground">
+            Etape 4 : Recapitulatif
+          </h2>
           <h3 className="text-lg font-semibold text-foreground">
             Recapitulatif de votre reservation
           </h3>
@@ -328,7 +340,11 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
             <ChevronRight className="h-4 w-4" aria-hidden="true" />
           </Button>
         ) : (
-          <Button type="button" onClick={handleConfirm}>
+          <Button
+            type="button"
+            onClick={handleConfirm}
+            className="bg-emerald-600 text-white hover:bg-emerald-700"
+          >
             <Check className="h-4 w-4" aria-hidden="true" />
             Confirmer la reservation
           </Button>

@@ -28,7 +28,7 @@ export default function FeedPage() {
 
       <PostForm />
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {filteredPosts.length > 0 ? (
           filteredPosts.map((post) => <PostCard key={post.id} post={post} />)
         ) : (

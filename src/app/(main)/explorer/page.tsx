@@ -112,6 +112,23 @@ export default function ExplorerPage() {
           <div className="md:hidden mb-4">
             {/* The Sheet trigger renders itself here via ExploreFilters */}
           </div>
+
+          {/* Result count */}
+          <div className="mb-4">
+            <p className="text-sm text-foreground">
+              <span className="font-bold text-lg">{filteredBusinesses.length}</span>{" "}
+              {filteredBusinesses.length <= 1 ? "etablissement trouve" : "etablissements trouves"}
+            </p>
+            {filters.handicapTypes.length === 0 &&
+              filters.category === "all" &&
+              !filters.department.trim() &&
+              filters.minRating === 0 && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Utilisez les filtres pour affiner votre recherche
+                </p>
+              )}
+          </div>
+
           <BusinessGrid businesses={filteredBusinesses} />
         </div>
       </div>

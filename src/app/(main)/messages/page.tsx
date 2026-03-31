@@ -5,7 +5,7 @@ import { useApp } from "@/components/providers/AppProvider";
 import { mockConversations } from "@/lib/mock-data/conversations";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { EmptyState } from "@/components/shared/EmptyState";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, MessageSquare } from "lucide-react";
 
 export default function MessagesPage() {
   const { currentUser } = useApp();
@@ -39,8 +39,14 @@ export default function MessagesPage() {
           </div>
 
           {/* Placeholder for desktop */}
-          <div className="hidden flex-1 items-center justify-center md:flex">
-            <p className="text-muted-foreground">Selectionnez une conversation</p>
+          <div className="hidden flex-1 flex-col items-center justify-center gap-3 md:flex">
+            <MessageSquare className="h-12 w-12 text-muted-foreground/40" aria-hidden="true" />
+            <h2 className="text-lg font-semibold text-foreground">
+              Selectionnez une conversation
+            </h2>
+            <p className="text-sm text-muted-foreground text-center max-w-[16rem]">
+              Cliquez sur un contact a gauche pour commencer a discuter
+            </p>
           </div>
         </div>
       </div>

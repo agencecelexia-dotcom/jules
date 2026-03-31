@@ -21,18 +21,10 @@ export function BusinessGrid({ businesses }: BusinessGridProps) {
   }
 
   return (
-    <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">
-        <span className="font-medium text-foreground">{businesses.length}</span>{" "}
-        {businesses.length <= 1
-          ? "etablissement trouve"
-          : "etablissements trouves"}
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {businesses.map((business) => (
-          <BusinessCard key={business.id} business={business} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {businesses.map((business) => (
+        <BusinessCard key={business.id} business={business} />
+      ))}
     </div>
   );
 }
