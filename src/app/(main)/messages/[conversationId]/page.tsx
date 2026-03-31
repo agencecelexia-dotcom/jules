@@ -2,7 +2,6 @@
 
 import { useMemo, use } from "react";
 import { useApp } from "@/components/providers/AppProvider";
-import { mockConversations } from "@/lib/mock-data/conversations";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { ChatWindow } from "@/components/messaging/ChatWindow";
 
@@ -12,14 +11,14 @@ interface ConversationPageProps {
 
 export default function ConversationPage({ params }: ConversationPageProps) {
   const { conversationId } = use(params);
-  const { currentUser } = useApp();
+  const { currentUser, conversations } = useApp();
 
   const userConversations = useMemo(
     () =>
-      mockConversations.filter(
+      conversations.filter(
         (c) => c.participant1Id === currentUser.id || c.participant2Id === currentUser.id
       ),
-    [currentUser.id]
+    [currentUser.id, conversations]
   );
 
   return (

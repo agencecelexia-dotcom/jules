@@ -2,20 +2,19 @@
 
 import { useMemo } from "react";
 import { useApp } from "@/components/providers/AppProvider";
-import { mockConversations } from "@/lib/mock-data/conversations";
 import { ConversationList } from "@/components/messaging/ConversationList";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { MessageCircle, MessageSquare } from "lucide-react";
 
 export default function MessagesPage() {
-  const { currentUser } = useApp();
+  const { currentUser, conversations } = useApp();
 
   const userConversations = useMemo(
     () =>
-      mockConversations.filter(
+      conversations.filter(
         (c) => c.participant1Id === currentUser.id || c.participant2Id === currentUser.id
       ),
-    [currentUser.id]
+    [currentUser.id, conversations]
   );
 
   if (userConversations.length === 0) {

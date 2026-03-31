@@ -1,12 +1,12 @@
 "use client";
 
 import React, { createContext, useContext, useState, useCallback, type ReactNode } from "react";
-import type { UserWithProfile, Post, Comment, Like, Follow, Booking, Message, Review, Activity } from "@/lib/types";
+import type { UserWithProfile, Post, Comment, Like, Follow, Booking, Message, Review, Activity, Conversation } from "@/lib/types";
 import { mockUsers } from "@/lib/mock-data/users";
 import { mockPosts, mockComments, mockLikes } from "@/lib/mock-data/posts";
 import { mockFollows } from "@/lib/mock-data/follows";
 import { mockBookings } from "@/lib/mock-data/bookings";
-import { mockMessages } from "@/lib/mock-data/conversations";
+import { mockConversations, mockMessages } from "@/lib/mock-data/conversations";
 import { mockReviews } from "@/lib/mock-data/reviews";
 import { mockActivities } from "@/lib/mock-data/activities";
 import { generateId } from "@/lib/utils";
@@ -19,6 +19,7 @@ interface AppState {
   likes: Like[];
   follows: Follow[];
   bookings: Booking[];
+  conversations: Conversation[];
   messages: Message[];
   reviews: Review[];
   activities: Activity[];
@@ -33,7 +34,9 @@ interface AppActions {
   createBooking: (booking: Omit<Booking, "id" | "createdAt" | "status">) => void;
   cancelBooking: (bookingId: string) => void;
   sendMessage: (conversationId: string, content: string) => void;
+  getOrCreateConversation: (otherUserId: string) => string;
   addReview: (review: Omit<Review, "id" | "createdAt">) => void;
+  replyToReview: (reviewId: string, reply: string) => void;
   addActivity: (activity: Omit<Activity, "id">) => void;
   updateActivity: (activityId: string, updates: Partial<Activity>) => void;
   deleteActivity: (activityId: string) => void;
@@ -65,6 +68,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [likes, setLikes] = useState<Like[]>(mockLikes);
   const [follows, setFollows] = useState<Follow[]>(mockFollows);
   const [bookings, setBookings] = useState<Booking[]>(mockBookings);
+  const [conversations, setConversations] = useState<Conversation[]>(mockConversations);
   const [messages, setMessages] = useState<Message[]>(mockMessages);
   const [reviews, setReviews] = useState<Review[]>(mockReviews);
   const [activities, setActivities] = useState<Activity[]>(mockActivities);
@@ -197,6 +201,29 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [currentUser.id]
   );
 
+  const getOrCreateConversation = useCallback(
+    (otherUserId: string): string => {
+      // Check if conversation already exists (check both participant orders)
+      const existing = conversations.find(
+        (c) =>
+          (c.participant1Id === currentUser.id && c.participant2Id === otherUserId) ||
+          (c.participant1Id === otherUserId && c.participant2Id === currentUser.id)
+      );
+      if (existing) return existing.id;
+
+      // Create a new conversation
+      const newConversation: Conversation = {
+        id: `conv-${generateId()}`,
+        participant1Id: currentUser.id,
+        participant2Id: otherUserId,
+        lastMessageAt: new Date().toISOString(),
+      };
+      setConversations((prev) => [newConversation, ...prev]);
+      return newConversation.id;
+    },
+    [conversations, currentUser.id]
+  );
+
   const addReview = useCallback(
     (review: Omit<Review, "id" | "createdAt">) => {
       const newReview: Review = {
@@ -205,6 +232,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
         createdAt: new Date().toISOString(),
       };
       setReviews((prev) => [newReview, ...prev]);
+    },
+    []
+  );
+
+  const replyToReview = useCallback(
+    (reviewId: string, reply: string) => {
+      setReviews((prev) =>
+        prev.map((r) =>
+          r.id === reviewId
+            ? { ...r, businessReply: reply, businessReplyDate: new Date().toISOString() }
+            : r
+        )
+      );
     },
     []
   );
@@ -398,6 +438,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     likes,
     follows,
     bookings,
+    conversations,
     messages,
     reviews,
     activities,
@@ -409,7 +450,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
     createBooking,
     cancelBooking,
     sendMessage,
+    getOrCreateConversation,
     addReview,
+    replyToReview,
     addActivity,
     updateActivity,
     deleteActivity,

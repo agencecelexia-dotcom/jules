@@ -11,6 +11,7 @@ import {
   CalendarDays,
   LayoutDashboard,
   LogOut,
+  Bell,
 } from "lucide-react";
 import { useApp } from "@/components/providers/AppProvider";
 import { getInitials, cn } from "@/lib/utils";
@@ -75,8 +76,22 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* Right: Avatar with dropdown (desktop) / Avatar only (mobile) */}
-        <div className="flex items-center">
+        {/* Right: Notification bell + Avatar with dropdown (desktop) / Avatar only (mobile) */}
+        <div className="flex items-center gap-3">
+          {/* Notification bell */}
+          <Link
+            href="/notifications"
+            className={cn(
+              "relative hidden md:flex items-center justify-center w-9 h-9 rounded-full transition-colors",
+              pathname.startsWith("/notifications")
+                ? "text-hc-coral bg-hc-coral/10"
+                : "text-hc-text-muted hover:text-hc-text hover:bg-hc-bg-secondary"
+            )}
+            aria-label="Notifications"
+          >
+            <Bell className="size-5" />
+            <span className="absolute top-1 right-1.5 block w-2 h-2 rounded-full bg-red-500 ring-2 ring-white" />
+          </Link>
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full">
               <div className="avatar-ring">

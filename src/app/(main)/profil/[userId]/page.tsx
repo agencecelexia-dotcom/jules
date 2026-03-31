@@ -1,7 +1,8 @@
 "use client";
 
 import { use } from "react";
-import { ShieldCheck, Building2 } from "lucide-react";
+import Link from "next/link";
+import { ShieldCheck, Building2, ExternalLink } from "lucide-react";
 import { useApp } from "@/components/providers/AppProvider";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { ProfileTabs } from "@/components/profile/ProfileTabs";
@@ -15,7 +16,7 @@ interface ProfilePageProps {
 
 export default function ProfilePage({ params }: ProfilePageProps) {
   const { userId } = use(params);
-  const { getUser } = useApp();
+  const { currentUser, getUser } = useApp();
   const user = getUser(userId);
 
   if (!user) {
@@ -32,10 +33,22 @@ export default function ProfilePage({ params }: ProfilePageProps) {
 
   const isFamily = user.role === "FAMILY";
   const isBusiness = user.role === "BUSINESS";
+  const isOwnProfile = currentUser.id === user.id;
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <ProfileHeader user={user} />
+
+      {/* Business viewing own profile: link to public page */}
+      {isBusiness && isOwnProfile && (
+        <Link
+          href={`/explorer/${user.id}`}
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+        >
+          <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          Voir ma page publique
+        </Link>
+      )}
 
       <hr className="border-hc-border" />
 

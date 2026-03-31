@@ -84,6 +84,8 @@ export interface Review {
   handicapContext: string;
   visitDate?: string;
   createdAt: string;
+  businessReply?: string;
+  businessReplyDate?: string;
 }
 
 export interface Activity {

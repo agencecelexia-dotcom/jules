@@ -1,9 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { MapPin, Mail, Pencil } from "lucide-react";
 import { useApp } from "@/components/providers/AppProvider";
 import { HandicapBadge } from "@/components/shared/HandicapBadge";
+import { EditProfileModal } from "@/components/profile/EditProfileModal";
+import { FollowersModal } from "@/components/profile/FollowersModal";
 import type { UserWithProfile } from "@/lib/types";
 import { getInitials } from "@/lib/utils";
 
@@ -12,8 +15,13 @@ interface ProfileHeaderProps {
 }
 
 export function ProfileHeader({ user }: ProfileHeaderProps) {
-  const { currentUser, getFollowerCount, getFollowingCount, getUserPosts, isFollowing, toggleFollow, canMessage } =
+  const { currentUser, getFollowerCount, getFollowingCount, getUserPosts, isFollowing, toggleFollow, canMessage, getOrCreateConversation } =
     useApp();
+  const router = useRouter();
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [followersOpen, setFollowersOpen] = useState(false);
+  const [followingOpen, setFollowingOpen] = useState(false);
 
   const followerCount = getFollowerCount(user.id);
   const followingCount = getFollowingCount(user.id);
@@ -21,6 +29,11 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
   const isOwnProfile = currentUser.id === user.id;
   const following = isFollowing(user.id);
   const canSendMessage = canMessage(user.id);
+
+  const handleMessage = useCallback(() => {
+    const conversationId = getOrCreateConversation(user.id);
+    router.push(`/messages/${conversationId}`);
+  }, [getOrCreateConversation, user.id, router]);
 
   // Determine if follow/subscribe button should show
   const showFollowButton = (() => {
@@ -67,14 +80,22 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
             <span className="block font-extrabold text-lg text-hc-text">{postCount}</span>
             <span className="text-xs text-hc-text-muted">Publications</span>
           </div>
-          <div>
-            <span className="block font-extrabold text-lg text-hc-text">{followerCount}</span>
+          <button
+            type="button"
+            onClick={() => setFollowersOpen(true)}
+            className="cursor-pointer hover:opacity-70 transition-opacity"
+          >
+            <span className="block font-extrabold text-lg text-hc-text hover:underline">{followerCount}</span>
             <span className="text-xs text-hc-text-muted">Abonnes</span>
-          </div>
-          <div>
-            <span className="block font-extrabold text-lg text-hc-text">{followingCount}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setFollowingOpen(true)}
+            className="cursor-pointer hover:opacity-70 transition-opacity"
+          >
+            <span className="block font-extrabold text-lg text-hc-text hover:underline">{followingCount}</span>
             <span className="text-xs text-hc-text-muted">Abonnements</span>
-          </div>
+          </button>
         </div>
       </div>
 
@@ -111,8 +132,8 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
       <div className="flex items-center gap-2">
         {isOwnProfile ? (
           <button
-            disabled
-            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-hc-bg-secondary text-hc-text px-6 py-2 text-sm font-semibold"
+            onClick={() => setEditOpen(true)}
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-hc-bg-secondary text-hc-text px-6 py-2 text-sm font-semibold hover:bg-neutral-200 transition-colors"
           >
             <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
             Modifier le profil
@@ -142,17 +163,32 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
             )}
 
             {canSendMessage && (
-              <Link
-                href="/messages"
+              <button
+                onClick={handleMessage}
                 className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-hc-border text-hc-text px-4 py-2 text-sm font-semibold hover:bg-hc-bg-secondary transition-colors"
               >
                 <Mail className="h-4 w-4" aria-hidden="true" />
                 Message
-              </Link>
+              </button>
             )}
           </>
         )}
       </div>
+
+      {/* Modals */}
+      <EditProfileModal open={editOpen} onClose={() => setEditOpen(false)} />
+      <FollowersModal
+        userId={user.id}
+        mode="followers"
+        open={followersOpen}
+        onClose={() => setFollowersOpen(false)}
+      />
+      <FollowersModal
+        userId={user.id}
+        mode="following"
+        open={followingOpen}
+        onClose={() => setFollowingOpen(false)}
+      />
     </div>
   );
 }

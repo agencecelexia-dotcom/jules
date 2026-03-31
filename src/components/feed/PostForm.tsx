@@ -6,7 +6,8 @@ import type { HandicapType, PostType } from "@/lib/types";
 import { HANDICAP_LABELS, POST_TYPE_LABELS } from "@/lib/constants";
 import { cn, getInitials } from "@/lib/utils";
 import { toast } from "sonner";
-import { ImageIcon, Tag, MapPin } from "lucide-react";
+import { ImageIcon, Tag, MapPin, Building2, X } from "lucide-react";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 
 const HANDICAP_TYPES: HandicapType[] = [
   "MOTEUR",
@@ -25,14 +26,22 @@ const BUSINESS_POST_TYPES: PostType[] = ["STORY", "TIP"];
 const MAX_CHARS = 2000;
 
 export function PostForm() {
-  const { currentUser, addPost } = useApp();
+  const { currentUser, users, addPost } = useApp();
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState<HandicapType[]>([]);
   const isBusiness = currentUser.role === "BUSINESS";
+  const isFamily = currentUser.role === "FAMILY";
   const availablePostTypes = isBusiness ? BUSINESS_POST_TYPES : FAMILY_POST_TYPES;
   const [postType, setPostType] = useState<PostType>(isBusiness ? "STORY" : "EXPERIENCE");
   const [showOptions, setShowOptions] = useState(false);
+  const [linkedBusinessId, setLinkedBusinessId] = useState<string | null>(null);
+  const [businessPopoverOpen, setBusinessPopoverOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const businessUsers = users.filter((u) => u.role === "BUSINESS");
+  const linkedBusiness = linkedBusinessId
+    ? businessUsers.find((u) => u.id === linkedBusinessId)
+    : null;
 
   const toggleTag = useCallback((tag: HandicapType) => {
     setSelectedTags((prev) =>
@@ -52,15 +61,17 @@ export function PostForm() {
         content: trimmed,
         media: [],
         handicapTags: selectedTags,
+        ...(linkedBusinessId ? { linkedBusinessId } : {}),
       });
 
       setContent("");
       setSelectedTags([]);
+      setLinkedBusinessId(null);
       setPostType(isBusiness ? "STORY" : "EXPERIENCE");
       setShowOptions(false);
       toast("Publication creee !");
     },
-    [content, selectedTags, postType, currentUser.id, addPost, isBusiness]
+    [content, selectedTags, postType, currentUser.id, addPost, isBusiness, linkedBusinessId]
   );
 
   const charCount = content.length;
@@ -114,6 +125,24 @@ export function PostForm() {
             >
               {charCount} / {MAX_CHARS}
             </p>
+          )}
+
+          {/* Linked business pill */}
+          {linkedBusiness && (
+            <div className="flex items-center gap-1.5 mt-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-hc-bg-secondary px-3 py-1 text-xs font-medium text-hc-text">
+                <Building2 className="size-3" aria-hidden="true" />
+                {linkedBusiness.name}
+                <button
+                  type="button"
+                  onClick={() => setLinkedBusinessId(null)}
+                  className="ml-0.5 text-hc-text-muted hover:text-hc-text transition-colors"
+                  aria-label={`Retirer ${linkedBusiness.name}`}
+                >
+                  <X className="size-3" />
+                </button>
+              </span>
+            </div>
           )}
 
           {/* Expanded options */}
@@ -174,6 +203,54 @@ export function PostForm() {
               <button type="button" className="text-hc-text-muted hover:text-hc-text transition-colors" aria-label="Ajouter un lieu">
                 <MapPin className="size-5" />
               </button>
+
+              {/* Tag a business — only for FAMILY users */}
+              {isFamily && (
+                <Popover open={businessPopoverOpen} onOpenChange={setBusinessPopoverOpen}>
+                  <PopoverTrigger
+                    className={cn(
+                      "transition-colors",
+                      linkedBusinessId
+                        ? "text-hc-accent"
+                        : "text-hc-text-muted hover:text-hc-text"
+                    )}
+                    aria-label="Taguer un etablissement"
+                  >
+                    <Building2 className="size-5" />
+                  </PopoverTrigger>
+                  <PopoverContent align="start" className="w-64 p-1">
+                    <p className="px-2 py-1.5 text-xs font-semibold text-hc-text-muted">
+                      Taguer un etablissement
+                    </p>
+                    <ul className="max-h-48 overflow-y-auto">
+                      {businessUsers.map((biz) => (
+                        <li key={biz.id}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setLinkedBusinessId(biz.id);
+                              setBusinessPopoverOpen(false);
+                            }}
+                            className={cn(
+                              "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm text-left transition-colors hover:bg-hc-bg-secondary",
+                              linkedBusinessId === biz.id && "bg-hc-bg-secondary font-medium"
+                            )}
+                          >
+                            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-hc-bg-secondary text-[10px] font-semibold overflow-hidden">
+                              {biz.avatar ? (
+                                <img src={biz.avatar} alt="" className="h-6 w-6 rounded-full object-cover" />
+                              ) : (
+                                getInitials(biz.name)
+                              )}
+                            </div>
+                            <span className="truncate">{biz.name}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </PopoverContent>
+                </Popover>
+              )}
             </div>
 
             <button
