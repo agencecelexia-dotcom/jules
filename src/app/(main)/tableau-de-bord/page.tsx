@@ -43,7 +43,7 @@ export default function DashboardOverviewPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Tableau de bord</h1>
+        <h1 className="text-2xl font-heading font-bold text-foreground">Tableau de bord</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Vue d&apos;ensemble de votre activite
         </p>
@@ -53,7 +53,7 @@ export default function DashboardOverviewPage() {
 
       {/* Recent bookings */}
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-foreground">Reservations recentes</h2>
+        <h2 className="mb-4 text-lg font-heading font-semibold text-foreground">Reservations recentes</h2>
         {recentBookings.length > 0 ? (
           <div className="overflow-x-auto rounded-xl border bg-card ring-1 ring-foreground/10">
             <table className="w-full text-sm">
@@ -96,7 +96,7 @@ export default function DashboardOverviewPage() {
 
       {/* Recent reviews */}
       <section>
-        <h2 className="mb-4 text-lg font-semibold text-foreground">Derniers avis</h2>
+        <h2 className="mb-4 text-lg font-heading font-semibold text-foreground">Derniers avis</h2>
         {recentReviews.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {recentReviews.map((review) => {
@@ -114,7 +114,7 @@ export default function DashboardOverviewPage() {
                       <span className="text-sm font-medium">{author?.name ?? "Anonyme"}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Star className="size-3.5 fill-amber-400 text-amber-400" aria-hidden="true" />
+                      <Star className="size-3.5 fill-hc-gold text-hc-gold" aria-hidden="true" />
                       <span className="text-sm font-medium">{review.rating}</span>
                     </div>
                   </div>

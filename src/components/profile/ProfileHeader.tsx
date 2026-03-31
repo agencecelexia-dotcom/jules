@@ -32,7 +32,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
       <div className="flex flex-col sm:flex-row items-start gap-4">
         {/* Avatar */}
         <div className="relative shrink-0">
-          <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center overflow-hidden ring-2 ring-border">
+          <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center overflow-hidden ring-2 ring-hc-sage/30">
             {user.avatar ? (
               <img
                 src={user.avatar}
@@ -55,7 +55,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
             </h1>
             <div className="flex items-center gap-2">
               {isOwnProfile ? (
-                <Button variant="outline" size="sm" disabled>
+                <Button variant="outline" size="sm" className="rounded-full" disabled>
                   <Pencil className="h-4 w-4" aria-hidden="true" />
                   Modifier le profil
                 </Button>
@@ -65,7 +65,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
               {!isOwnProfile && mutual && (
                 <Link
                   href="/messages"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-2.5 py-1 text-sm font-medium hover:bg-muted transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-sm font-medium hover:bg-muted transition-colors"
                 >
                   <Mail className="h-4 w-4" aria-hidden="true" />
                   Envoyer un message
@@ -96,19 +96,19 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
       {/* Stats row */}
       <div className="flex items-center gap-6 text-sm">
         <div>
-          <span className="font-semibold text-foreground">{postCount}</span>{" "}
+          <span className="font-heading font-bold text-foreground">{postCount}</span>{" "}
           <span className="text-muted-foreground">
             {postCount <= 1 ? "publication" : "publications"}
           </span>
         </div>
         <div>
-          <span className="font-semibold text-foreground">{followerCount}</span>{" "}
+          <span className="font-heading font-bold text-foreground">{followerCount}</span>{" "}
           <span className="text-muted-foreground">
             {followerCount <= 1 ? "abonne" : "abonnes"}
           </span>
         </div>
         <div>
-          <span className="font-semibold text-foreground">{followingCount}</span>{" "}
+          <span className="font-heading font-bold text-foreground">{followingCount}</span>{" "}
           <span className="text-muted-foreground">abonnements</span>
         </div>
       </div>

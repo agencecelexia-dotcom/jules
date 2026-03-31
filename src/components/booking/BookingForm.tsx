@@ -139,7 +139,7 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 1: Select activity */}
       {step === 0 && (
         <fieldset className="space-y-3">
-          <h2 className="text-xl font-bold text-foreground">
+          <h2 className="text-xl font-heading font-bold text-foreground">
             Etape 1 : Activite
           </h2>
           <legend className="text-lg font-semibold text-foreground mb-3">
@@ -150,10 +150,10 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
               <label
                 key={activity.id}
                 className={cn(
-                  "flex cursor-pointer flex-col gap-2 rounded-xl border p-4 transition-colors",
+                  "card-editorial flex cursor-pointer flex-col gap-2 p-4 transition-colors",
                   selectedActivityId === activity.id
-                    ? "border-primary bg-primary/5 ring-1 ring-primary"
-                    : "border-border hover:border-primary/50"
+                    ? "border-hc-blue bg-hc-blue/5 ring-1 ring-hc-blue"
+                    : "hover:border-hc-blue/50"
                 )}
               >
                 <div className="flex items-start justify-between gap-3">
@@ -211,7 +211,7 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 2: Select date */}
       {step === 1 && (
         <div className="space-y-3">
-          <h2 className="text-xl font-bold text-foreground">
+          <h2 className="text-xl font-heading font-bold text-foreground">
             Etape 2 : Date
           </h2>
           <h3 className="text-lg font-semibold text-foreground">
@@ -239,7 +239,7 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 3: Participants */}
       {step === 2 && selectedActivity && (
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-foreground">
+          <h2 className="text-xl font-heading font-bold text-foreground">
             Etape 3 : Participants
           </h2>
           <h3 className="text-lg font-semibold text-foreground">
@@ -283,7 +283,7 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
       {/* Step 4: Summary */}
       {step === 3 && selectedActivity && selectedDate && (
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-foreground">
+          <h2 className="text-xl font-heading font-bold text-foreground">
             Etape 4 : Recapitulatif
           </h2>
           <h3 className="text-lg font-semibold text-foreground">
@@ -343,7 +343,7 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
           <Button
             type="button"
             onClick={handleConfirm}
-            className="bg-emerald-600 text-white hover:bg-emerald-700"
+            className="rounded-full bg-emerald-600 text-white hover:bg-emerald-700"
           >
             <Check className="h-4 w-4" aria-hidden="true" />
             Confirmer la reservation

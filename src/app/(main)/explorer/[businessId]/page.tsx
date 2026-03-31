@@ -44,7 +44,7 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md
           className={cn(
             iconSize,
             i <= Math.round(rating)
-              ? "fill-yellow-400 text-yellow-400"
+              ? "fill-hc-gold text-hc-gold"
               : "fill-none text-muted-foreground/30"
           )}
           aria-hidden="true"
@@ -56,7 +56,7 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md
 
 function ActivityDetailCard({ activity, businessId }: { activity: Activity; businessId: string }) {
   return (
-    <div className="bg-card rounded-xl border border-border/50 p-5 space-y-3">
+    <div className="card-editorial card-accent-blue p-5 space-y-3">
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-semibold text-foreground text-base">{activity.title}</h3>
@@ -109,7 +109,7 @@ function ActivityDetailCard({ activity, businessId }: { activity: Activity; busi
       {/* Action */}
       <Link
         href={`/explorer/${businessId}/reserver`}
-        className="inline-flex items-center justify-center gap-2 rounded-xl bg-hc-blue px-6 py-3 text-base font-semibold text-white hover:bg-hc-blue/90 transition-colors shadow-sm"
+        className="inline-flex items-center justify-center gap-2 rounded-full bg-hc-blue px-6 py-3 text-base font-semibold text-white hover:bg-hc-blue/90 transition-colors shadow-sm"
       >
         <CalendarPlus className="h-5 w-5" aria-hidden="true" />
         Reserver

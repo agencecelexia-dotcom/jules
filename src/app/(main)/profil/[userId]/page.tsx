@@ -41,8 +41,8 @@ export default function ProfilePage({ params }: ProfilePageProps) {
 
       {/* Handicap badges for family profiles */}
       {isFamily && user.familyProfile && user.familyProfile.handicapTypes.length > 0 && (
-        <div className="rounded-xl border bg-card p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-foreground">
+        <div className="card-editorial card-accent-sage p-5 space-y-3">
+          <h2 className="text-sm font-heading font-semibold text-foreground">
             Types de handicap concernes
           </h2>
           <div className="flex flex-wrap gap-2">

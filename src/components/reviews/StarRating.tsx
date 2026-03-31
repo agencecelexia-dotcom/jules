@@ -36,7 +36,7 @@ export function StarRating(props: StarRatingProps) {
             className={cn(
               iconSize,
               i <= Math.round(value)
-                ? "fill-yellow-400 text-yellow-400"
+                ? "fill-hc-gold text-hc-gold"
                 : "fill-none text-muted-foreground/30"
             )}
             aria-hidden="true"
@@ -114,7 +114,7 @@ function InteractiveStarRating({
             className={cn(
               iconSize,
               i <= displayValue
-                ? "fill-yellow-400 text-yellow-400"
+                ? "fill-hc-gold text-hc-gold"
                 : "fill-none text-muted-foreground/30"
             )}
             aria-hidden="true"

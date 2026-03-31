@@ -64,7 +64,7 @@ export function PostForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-card rounded-2xl p-6 shadow-sm border border-border/50"
+      className="card-editorial rounded-2xl p-6 shadow-sm"
     >
       <div className="flex gap-3">
         {/* Avatar */}

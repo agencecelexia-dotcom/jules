@@ -67,7 +67,7 @@ export function ChatWindow({ conversationId }: ChatWindowProps) {
         >
           {getInitials(otherUser.name)}
         </div>
-        <span className="text-sm font-medium text-foreground">{otherUser.name}</span>
+        <span className="text-sm font-heading font-medium text-foreground">{otherUser.name}</span>
       </div>
 
       {/* Messages list */}

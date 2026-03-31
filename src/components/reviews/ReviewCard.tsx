@@ -13,7 +13,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
   const author = getUser(review.authorId);
 
   return (
-    <div className="border-b border-border/50 py-4 last:border-0">
+    <div className="card-editorial py-4 last:border-0">
       <div className="flex items-start gap-3">
         {/* Avatar */}
         <Avatar>
