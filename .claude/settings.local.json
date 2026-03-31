@@ -22,7 +22,32 @@
       "Bash(yes \"n\")",
       "Bash(npm install:*)",
       "Bash(npx shadcn@latest init -d --style new-york --base-color neutral)",
-      "Bash(npx shadcn@latest init -d)"
+      "Bash(npx shadcn@latest init -d)",
+      "Bash(npx shadcn@latest add input textarea card dialog select badge avatar tabs skeleton toast sheet calendar popover command carousel form label checkbox radio-group scroll-area separator tooltip dropdown-menu alert-dialog switch -y)",
+      "Bash(npx shadcn@latest add input textarea card dialog select badge avatar tabs skeleton sonner sheet calendar popover command carousel form label checkbox radio-group scroll-area separator tooltip dropdown-menu alert-dialog switch -y)",
+      "Bash(npx tsc:*)",
+      "Bash(ls -la C:/Users/AA/jules/src/app/\\\\\\(main\\\\\\)/)",
+      "Bash(npx next:*)",
+      "Bash(ls \"C:/Users/AA/jules/src/app/\\(main\\)/\")",
+      "Bash(ls -la \"C:/Users/AA/jules/src/app/\\(main\\)/fil/\")",
+      "Bash(ls -la \"C:/Users/AA/jules/src/app/\\(main\\)/fil/[postId]/\")",
+      "Bash(ls -laR C:/Users/AA/jules/src/app/\\\\\\(main\\\\\\)/explorer/)",
+      "Bash(ls C:/Users/AA/jules/src/app/\\\\\\(main\\\\\\)/)",
+      "Bash(ls -la \"C:/Users/AA/jules/src/app/\\(main\\)/explorer/[businessId]/reserver/\")",
+      "Bash(ls -la \"C:/Users/AA/jules/src/app/\\(main\\)/mes-reservations/\")",
+      "Bash(ls -R C:/Users/AA/jules/src/app/\\\\\\(main\\\\\\)/messages/)",
+      "Bash(ls -R C:/Users/AA/jules/src/app/\\\\\\(main\\\\\\)/tableau-de-bord/)",
+      "Bash(npm run:*)",
+      "Bash(git -C /c/Users/AA/jules remote -v)",
+      "Bash(git -C /c/Users/AA/jules status)",
+      "Bash(git -C /c/Users/AA/jules log --oneline -5)",
+      "Bash(git -C /c/Users/AA/jules diff --stat)",
+      "Bash(git -C /c/Users/AA/jules add src/ package.json package-lock.json components.json)",
+      "Bash(git -C /c/Users/AA/jules add .claude/settings.local.json)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\AA\\jules\\src\\lib",
+      "C:\\Users\\AA\\jules\\src\\app\\(main)\\profil"
     ]
   }
 }
