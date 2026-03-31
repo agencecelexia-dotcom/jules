@@ -19,7 +19,8 @@ const HANDICAP_TYPES: HandicapType[] = [
   "AUTRE",
 ];
 
-const POST_TYPES: PostType[] = ["EXPERIENCE", "QUESTION", "TIP", "STORY"];
+const FAMILY_POST_TYPES: PostType[] = ["EXPERIENCE", "QUESTION", "TIP", "STORY"];
+const BUSINESS_POST_TYPES: PostType[] = ["STORY", "TIP"];
 
 const MAX_CHARS = 2000;
 
@@ -27,7 +28,9 @@ export function PostForm() {
   const { currentUser, addPost } = useApp();
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState<HandicapType[]>([]);
-  const [postType, setPostType] = useState<PostType>("EXPERIENCE");
+  const isBusiness = currentUser.role === "BUSINESS";
+  const availablePostTypes = isBusiness ? BUSINESS_POST_TYPES : FAMILY_POST_TYPES;
+  const [postType, setPostType] = useState<PostType>(isBusiness ? "STORY" : "EXPERIENCE");
   const [showOptions, setShowOptions] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -53,11 +56,11 @@ export function PostForm() {
 
       setContent("");
       setSelectedTags([]);
-      setPostType("EXPERIENCE");
+      setPostType(isBusiness ? "STORY" : "EXPERIENCE");
       setShowOptions(false);
       toast("Publication creee !");
     },
-    [content, selectedTags, postType, currentUser.id, addPost]
+    [content, selectedTags, postType, currentUser.id, addPost, isBusiness]
   );
 
   const charCount = content.length;
@@ -95,7 +98,7 @@ export function PostForm() {
               }
             }}
             onFocus={() => setShowOptions(true)}
-            placeholder="Quoi de neuf ?"
+            placeholder={isBusiness ? "Partagez une actualite..." : "Partagez votre experience..."}
             className="w-full resize-none bg-transparent border-none outline-none text-sm placeholder:text-hc-text-muted min-h-[40px] field-sizing-content"
             rows={2}
             aria-label="Contenu de la publication"
@@ -118,7 +121,7 @@ export function PostForm() {
             <>
               {/* Post type pills */}
               <div className="flex flex-wrap gap-1.5 mt-3">
-                {POST_TYPES.map((type) => (
+                {availablePostTypes.map((type) => (
                   <button
                     key={type}
                     type="button"
@@ -135,25 +138,27 @@ export function PostForm() {
                 ))}
               </div>
 
-              {/* Handicap tag selector */}
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {HANDICAP_TYPES.map((type) => (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => toggleTag(type)}
-                    aria-pressed={selectedTags.includes(type)}
-                    className={cn(
-                      "rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors",
-                      selectedTags.includes(type)
-                        ? "gradient-warm text-white"
-                        : "bg-hc-bg-secondary text-hc-text-muted hover:bg-hc-border"
-                    )}
-                  >
-                    {HANDICAP_LABELS[type]}
-                  </button>
-                ))}
-              </div>
+              {/* Handicap tag selector — only for families */}
+              {!isBusiness && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {HANDICAP_TYPES.map((type) => (
+                    <button
+                      key={type}
+                      type="button"
+                      onClick={() => toggleTag(type)}
+                      aria-pressed={selectedTags.includes(type)}
+                      className={cn(
+                        "rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors",
+                        selectedTags.includes(type)
+                          ? "gradient-warm text-white"
+                          : "bg-hc-bg-secondary text-hc-text-muted hover:bg-hc-border"
+                      )}
+                    >
+                      {HANDICAP_LABELS[type]}
+                    </button>
+                  ))}
+                </div>
+              )}
             </>
           )}
 

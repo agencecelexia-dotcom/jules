@@ -68,6 +68,27 @@ export function ReviewForm({ businessId, onClose, open }: ReviewFormProps) {
     }
   }
 
+  // Business users cannot leave reviews
+  if (currentUser.role === "BUSINESS") {
+    return (
+      <Dialog open={open} onOpenChange={handleOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Action non disponible</DialogTitle>
+            <DialogDescription>
+              Les etablissements ne peuvent pas laisser d&apos;avis sur d&apos;autres etablissements.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onClose}>
+              Fermer
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">

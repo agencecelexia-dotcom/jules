@@ -155,6 +155,21 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
         </div>
       )}
 
+      {/* Linked business */}
+      {post.linkedBusinessId && (() => {
+        const linkedBusiness = getUser(post.linkedBusinessId);
+        const businessName = linkedBusiness?.businessProfile?.companyName ?? linkedBusiness?.name ?? "Etablissement";
+        return (
+          <Link
+            href={`/explorer/${post.linkedBusinessId}`}
+            className="mt-3 flex items-center gap-2 rounded-lg border border-hc-border bg-hc-bg-secondary/50 px-3 py-2 text-sm hover:bg-hc-bg-secondary transition-colors"
+          >
+            <span aria-hidden="true">📍</span>
+            <span className="text-hc-text-secondary font-medium">Avis sur {businessName}</span>
+          </Link>
+        );
+      })()}
+
       {/* Location */}
       {post.location && (
         <div className="flex items-center gap-1 mt-2 text-xs text-hc-text-muted">

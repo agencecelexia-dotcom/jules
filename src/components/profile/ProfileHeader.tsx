@@ -12,7 +12,7 @@ interface ProfileHeaderProps {
 }
 
 export function ProfileHeader({ user }: ProfileHeaderProps) {
-  const { currentUser, getFollowerCount, getFollowingCount, getUserPosts, isFollowing, toggleFollow, isMutualFollow } =
+  const { currentUser, getFollowerCount, getFollowingCount, getUserPosts, isFollowing, toggleFollow, canMessage } =
     useApp();
 
   const followerCount = getFollowerCount(user.id);
@@ -20,7 +20,21 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
   const postCount = getUserPosts(user.id).length;
   const isOwnProfile = currentUser.id === user.id;
   const following = isFollowing(user.id);
-  const mutual = isMutualFollow(user.id);
+  const canSendMessage = canMessage(user.id);
+
+  // Determine if follow/subscribe button should show
+  const showFollowButton = (() => {
+    if (isOwnProfile) return false;
+    // Business viewing a family: no follow button
+    if (currentUser.role === "BUSINESS" && user.role === "FAMILY") return false;
+    // Business viewing a business: no follow button
+    if (currentUser.role === "BUSINESS" && user.role === "BUSINESS") return false;
+    // Family viewing family or business: show button
+    return true;
+  })();
+
+  // Label for follow button depends on target role
+  const isSubscription = currentUser.role === "FAMILY" && user.role === "BUSINESS";
 
   const city = user.familyProfile?.city ?? user.businessProfile?.city;
   const department = user.familyProfile?.department ?? user.businessProfile?.department;
@@ -105,27 +119,29 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
           </button>
         ) : (
           <>
-            {following ? (
-              <button
-                onClick={() => toggleFollow(user.id)}
-                className="inline-flex items-center justify-center rounded-lg bg-hc-bg-secondary text-hc-text px-6 py-2 text-sm font-semibold hover:bg-neutral-200 transition-colors"
-                aria-pressed={true}
-                aria-label="Se desabonner"
-              >
-                Abonne(e)
-              </button>
-            ) : (
-              <button
-                onClick={() => toggleFollow(user.id)}
-                className="inline-flex items-center justify-center rounded-lg gradient-warm text-white px-6 py-2 text-sm font-semibold hover:opacity-90 transition-opacity"
-                aria-pressed={false}
-                aria-label="Suivre"
-              >
-                Suivre
-              </button>
+            {showFollowButton && (
+              following ? (
+                <button
+                  onClick={() => toggleFollow(user.id)}
+                  className="inline-flex items-center justify-center rounded-lg bg-hc-bg-secondary text-hc-text px-6 py-2 text-sm font-semibold hover:bg-neutral-200 transition-colors"
+                  aria-pressed={true}
+                  aria-label={isSubscription ? "Se desabonner" : "Ne plus suivre"}
+                >
+                  {isSubscription ? "Abonne(e)" : "Abonne(e)"}
+                </button>
+              ) : (
+                <button
+                  onClick={() => toggleFollow(user.id)}
+                  className="inline-flex items-center justify-center rounded-lg gradient-warm text-white px-6 py-2 text-sm font-semibold hover:opacity-90 transition-opacity"
+                  aria-pressed={false}
+                  aria-label={isSubscription ? "S'abonner" : "Suivre"}
+                >
+                  {isSubscription ? "S'abonner" : "Suivre"}
+                </button>
+              )
             )}
 
-            {mutual && (
+            {canSendMessage && (
               <Link
                 href="/messages"
                 className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-hc-border text-hc-text px-4 py-2 text-sm font-semibold hover:bg-hc-bg-secondary transition-colors"

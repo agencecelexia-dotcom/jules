@@ -38,6 +38,8 @@ interface AppActions {
   updateActivity: (activityId: string, updates: Partial<Activity>) => void;
   deleteActivity: (activityId: string) => void;
   isFollowing: (targetUserId: string) => boolean;
+  isSubscribedTo: (businessId: string) => boolean;
+  canMessage: (otherUserId: string) => boolean;
   isMutualFollow: (otherUserId: string) => boolean;
   hasLiked: (postId: string) => boolean;
   getUser: (userId: string) => UserWithProfile | undefined;
@@ -134,6 +136,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const toggleFollow = useCallback(
     (targetUserId: string) => {
+      // Prevent BUSINESS from following other BUSINESS users
+      const targetUser = mockUsers.find((u) => u.id === targetUserId);
+      if (currentUser.role === "BUSINESS" && targetUser?.role === "BUSINESS") {
+        return;
+      }
+
       const existing = follows.find(
         (f) => f.followerId === currentUser.id && f.followingId === targetUserId
       );
@@ -232,15 +240,80 @@ export function AppProvider({ children }: { children: ReactNode }) {
     [follows, currentUser.id]
   );
 
-  const isMutualFollow = useCallback(
-    (otherUserId: string) =>
+  const isSubscribedTo = useCallback(
+    (businessId: string) =>
       follows.some(
-        (f) => f.followerId === currentUser.id && f.followingId === otherUserId
-      ) &&
-      follows.some(
-        (f) => f.followerId === otherUserId && f.followingId === currentUser.id
+        (f) => f.followerId === currentUser.id && f.followingId === businessId
       ),
     [follows, currentUser.id]
+  );
+
+  const canMessage = useCallback(
+    (otherUserId: string) => {
+      const otherUser = mockUsers.find((u) => u.id === otherUserId);
+      if (!otherUser) return false;
+
+      // Both are FAMILY: mutual follow required
+      if (currentUser.role === "FAMILY" && otherUser.role === "FAMILY") {
+        return (
+          follows.some(
+            (f) => f.followerId === currentUser.id && f.followingId === otherUserId
+          ) &&
+          follows.some(
+            (f) => f.followerId === otherUserId && f.followingId === currentUser.id
+          )
+        );
+      }
+
+      // Current is FAMILY, other is BUSINESS: family must be subscribed to business
+      if (currentUser.role === "FAMILY" && otherUser.role === "BUSINESS") {
+        return follows.some(
+          (f) => f.followerId === currentUser.id && f.followingId === otherUserId
+        );
+      }
+
+      // Current is BUSINESS, other is FAMILY: family must be subscribed to current business
+      if (currentUser.role === "BUSINESS" && otherUser.role === "FAMILY") {
+        return follows.some(
+          (f) => f.followerId === otherUserId && f.followingId === currentUser.id
+        );
+      }
+
+      // BUSINESS→BUSINESS: cannot message
+      return false;
+    },
+    [follows, currentUser.id, currentUser.role]
+  );
+
+  const isMutualFollow = useCallback(
+    (otherUserId: string) => {
+      const otherUser = mockUsers.find((u) => u.id === otherUserId);
+
+      // For family→business subscription: one-way is enough for messaging
+      if (currentUser.role === "FAMILY" && otherUser?.role === "BUSINESS") {
+        return follows.some(
+          (f) => f.followerId === currentUser.id && f.followingId === otherUserId
+        );
+      }
+
+      // For business→family: check if family is subscribed to business
+      if (currentUser.role === "BUSINESS" && otherUser?.role === "FAMILY") {
+        return follows.some(
+          (f) => f.followerId === otherUserId && f.followingId === currentUser.id
+        );
+      }
+
+      // Family→Family: true mutual follow
+      return (
+        follows.some(
+          (f) => f.followerId === currentUser.id && f.followingId === otherUserId
+        ) &&
+        follows.some(
+          (f) => f.followerId === otherUserId && f.followingId === currentUser.id
+        )
+      );
+    },
+    [follows, currentUser.id, currentUser.role]
   );
 
   const hasLiked = useCallback(
@@ -341,6 +414,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     updateActivity,
     deleteActivity,
     isFollowing,
+    isSubscribedTo,
+    canMessage,
     isMutualFollow,
     hasLiked,
     getUser,

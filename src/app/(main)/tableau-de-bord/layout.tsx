@@ -62,7 +62,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         className="hidden w-56 shrink-0 lg:block"
         aria-label="Navigation tableau de bord"
       >
-        <div className="sticky top-24 rounded-xl border bg-card p-2 ring-1 ring-foreground/10">
+        <div className="sticky top-20 rounded-xl border bg-card p-2 ring-1 ring-foreground/10">
           <ul className="space-y-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href;

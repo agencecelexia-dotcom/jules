@@ -17,13 +17,15 @@ const initialFilters: ExploreFiltersState = {
 };
 
 export default function ExplorerPage() {
-  const { users } = useApp();
+  const { users, currentUser } = useApp();
   const [filters, setFilters] = useState<ExploreFiltersState>(initialFilters);
 
-  // Get all business users
+  // Get all business users (exclude own business if current user is BUSINESS)
   const businesses = useMemo(() => {
-    return users.filter((u) => u.role === "BUSINESS" && u.businessProfile);
-  }, [users]);
+    return users.filter(
+      (u) => u.role === "BUSINESS" && u.businessProfile && u.id !== currentUser.id
+    );
+  }, [users, currentUser.id]);
 
   // Apply filters
   const filteredBusinesses = useMemo(() => {

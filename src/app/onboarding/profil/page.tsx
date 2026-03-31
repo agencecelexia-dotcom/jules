@@ -16,7 +16,7 @@ export default function OnboardingProfilPage() {
     : currentUser.businessProfile;
 
   return (
-    <div className="min-h-screen bg-hc-cream">
+    <div className="min-h-screen bg-hc-bg-secondary">
       {/* Simple top bar */}
       <header className="flex items-center px-6 py-4 bg-white border-b border-border">
         <Link href="/" className="font-heading text-xl font-bold text-hc-blue">
@@ -29,7 +29,7 @@ export default function OnboardingProfilPage() {
           <h1 className="font-heading text-3xl font-bold text-hc-text mb-2">
             Votre profil
           </h1>
-          <p className="text-hc-text-light">
+          <p className="text-hc-text-secondary">
             Verifiez vos informations avant de commencer
           </p>
         </div>
@@ -59,13 +59,13 @@ export default function OnboardingProfilPage() {
           {/* Profile info */}
           <div className="space-y-4 text-sm">
             <div>
-              <p className="text-hc-text-light mb-1">Email</p>
+              <p className="text-hc-text-secondary mb-1">Email</p>
               <p className="text-hc-text font-medium">{currentUser.email}</p>
             </div>
 
             {currentUser.bio && (
               <div>
-                <p className="text-hc-text-light mb-1">Bio</p>
+                <p className="text-hc-text-secondary mb-1">Bio</p>
                 <p className="text-hc-text">{currentUser.bio}</p>
               </div>
             )}
@@ -73,13 +73,13 @@ export default function OnboardingProfilPage() {
             {isFamily && currentUser.familyProfile && (
               <>
                 <div>
-                  <p className="text-hc-text-light mb-1">Ville</p>
+                  <p className="text-hc-text-secondary mb-1">Ville</p>
                   <p className="text-hc-text font-medium">
                     {currentUser.familyProfile.city}
                   </p>
                 </div>
                 <div>
-                  <p className="text-hc-text-light mb-1">
+                  <p className="text-hc-text-secondary mb-1">
                     Types de handicap
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -99,13 +99,13 @@ export default function OnboardingProfilPage() {
             {!isFamily && currentUser.businessProfile && (
               <>
                 <div>
-                  <p className="text-hc-text-light mb-1">Adresse</p>
+                  <p className="text-hc-text-secondary mb-1">Adresse</p>
                   <p className="text-hc-text font-medium">
                     {currentUser.businessProfile.address}
                   </p>
                 </div>
                 <div>
-                  <p className="text-hc-text-light mb-1">
+                  <p className="text-hc-text-secondary mb-1">
                     Handicaps accompagnes
                   </p>
                   <div className="flex flex-wrap gap-2">

@@ -56,7 +56,7 @@ function StarRating({ rating, size = "sm" }: { rating: number; size?: "sm" | "md
 
 function ActivityDetailCard({ activity, businessId }: { activity: Activity; businessId: string }) {
   return (
-    <div className="card-editorial card-accent-blue p-5 space-y-3">
+    <div className="card-social card-accent-blue p-5 space-y-3">
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <h3 className="font-semibold text-foreground text-base">{activity.title}</h3>

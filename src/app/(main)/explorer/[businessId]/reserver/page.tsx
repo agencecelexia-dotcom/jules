@@ -13,7 +13,22 @@ interface ReserverPageProps {
 
 export default function ReserverPage({ params }: ReserverPageProps) {
   const { businessId } = use(params);
-  const { getUser, getBusinessActivities } = useApp();
+  const { getUser, getBusinessActivities, currentUser } = useApp();
+
+  // Only families can book activities
+  if (currentUser.role !== "FAMILY") {
+    return (
+      <div className="max-w-2xl mx-auto space-y-6">
+        <EmptyState
+          icon={Building2}
+          title="Acces restreint"
+          description="Seules les familles peuvent reserver des activites."
+          actionLabel="Retour a l'explorateur"
+          actionHref="/explorer"
+        />
+      </div>
+    );
+  }
 
   const business = getUser(businessId);
   const activities = getBusinessActivities(businessId);

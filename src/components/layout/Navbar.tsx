@@ -26,9 +26,16 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 
-const navLinks = [
+const familyNavLinks = [
   { label: "Fil", href: "/fil", icon: Home },
   { label: "Explorer", href: "/explorer", icon: Compass },
+  { label: "Messages", href: "/messages", icon: MessageSquare },
+  { label: "Recherche", href: "/recherche", icon: Search },
+] as const;
+
+const businessNavLinks = [
+  { label: "Fil", href: "/fil", icon: Home },
+  { label: "Dashboard", href: "/tableau-de-bord", icon: LayoutDashboard },
   { label: "Messages", href: "/messages", icon: MessageSquare },
   { label: "Recherche", href: "/recherche", icon: Search },
 ] as const;
@@ -51,7 +58,7 @@ export function Navbar() {
 
         {/* Center: Desktop nav — icon + label columns like Instagram web */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+          {(currentUser.role === "BUSINESS" ? businessNavLinks : familyNavLinks).map((link) => (
             <Link
               key={link.href}
               href={link.href}

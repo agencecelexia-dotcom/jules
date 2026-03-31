@@ -25,7 +25,7 @@ export default function OnboardingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-hc-cream">
+    <div className="min-h-screen bg-hc-bg-secondary">
       {/* Simple top bar */}
       <header className="flex items-center px-6 py-4 bg-white border-b border-border">
         <Link href="/" className="font-heading text-xl font-bold text-hc-blue">
@@ -38,7 +38,7 @@ export default function OnboardingPage() {
           <h1 className="font-heading text-3xl font-bold text-hc-text mb-2">
             Bienvenue sur HandiConnect
           </h1>
-          <p className="text-hc-text-light">
+          <p className="text-hc-text-secondary">
             Quel est votre profil ?
           </p>
         </div>
@@ -68,7 +68,7 @@ export default function OnboardingPage() {
                 <h3 className="font-heading text-lg font-semibold text-hc-text mb-1">
                   {role.label}
                 </h3>
-                <p className="text-sm text-hc-text-light">{role.desc}</p>
+                <p className="text-sm text-hc-text-secondary">{role.desc}</p>
               </div>
             );
           })}

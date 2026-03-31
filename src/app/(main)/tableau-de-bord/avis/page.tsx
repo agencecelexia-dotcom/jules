@@ -48,8 +48,8 @@ export default function ReviewsPage() {
                         key={i}
                         className={`size-4 ${
                           i < review.rating
-                            ? "fill-amber-400 text-amber-400"
-                            : "fill-muted text-muted"
+                            ? "fill-hc-gold text-hc-gold"
+                            : "fill-none text-neutral-300"
                         }`}
                         aria-hidden="true"
                       />

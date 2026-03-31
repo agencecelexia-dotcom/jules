@@ -150,7 +150,7 @@ export function BookingForm({ businessId, activities }: BookingFormProps) {
               <label
                 key={activity.id}
                 className={cn(
-                  "card-editorial flex cursor-pointer flex-col gap-2 p-4 transition-colors",
+                  "card-social flex cursor-pointer flex-col gap-2 p-4 transition-colors",
                   selectedActivityId === activity.id
                     ? "border-hc-blue bg-hc-blue/5 ring-1 ring-hc-blue"
                     : "hover:border-hc-blue/50"

@@ -22,8 +22,8 @@ function StarRating({ rating }: { rating: number }) {
           key={i}
           className={`h-4 w-4 ${
             i <= rating
-              ? "fill-yellow-400 text-yellow-400"
-              : "fill-none text-muted-foreground/30"
+              ? "fill-hc-gold text-hc-gold"
+              : "fill-none text-neutral-300"
           }`}
           aria-hidden="true"
         />
