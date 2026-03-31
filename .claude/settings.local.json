@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh repo:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(ls -la \"C:\\\\Users\\\\AA\\\\.claude\\\\projects\\\\c--Users-AA-jules\\\\memory\"\" 2>/dev/null || echo \"Memory directory not found \")",
+      "Bash(git config:*)",
+      "Bash(find /c/Users/AA/jules/.claude -type f -name *.md)",
+      "Bash(find /c/Users/AA/jules -type f ! -path */.git/* ! -path */.claude/*)",
+      "Bash(git fetch:*)",
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(npx create-next-app@latest --help)",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(data[0][''''text''''][:8000]\\)\")",
+      "Bash(node -e \"const fs=require\\(''fs''\\); const d=JSON.parse\\(fs.readFileSync\\(''C:/Users/AA/.claude/projects/c--Users-AA-jules/667731ca-504e-4f1a-ba5b-a05f5351b270/tool-results/toolu_01AmRLK7g3z4xh8Dv4C8gbDt.json'',''utf8''\\)\\); const t=d[0].text; console.log\\(t.substring\\(0, 10000\\)\\)\")",
+      "Bash(node -e \"const fs=require\\(''fs''\\); const d=JSON.parse\\(fs.readFileSync\\(''C:/Users/AA/.claude/projects/c--Users-AA-jules/667731ca-504e-4f1a-ba5b-a05f5351b270/tool-results/toolu_01AmRLK7g3z4xh8Dv4C8gbDt.json'',''utf8''\\)\\); const t=d[0].text; console.log\\(t.substring\\(10000, 20000\\)\\)\")",
+      "Bash(node -e \"const fs=require\\(''fs''\\); const d=JSON.parse\\(fs.readFileSync\\(''C:/Users/AA/.claude/projects/c--Users-AA-jules/667731ca-504e-4f1a-ba5b-a05f5351b270/tool-results/toolu_01AmRLK7g3z4xh8Dv4C8gbDt.json'',''utf8''\\)\\); const t=d[0].text; console.log\\(t.substring\\(20000, 30000\\)\\)\")",
+      "Bash(node -e \"const fs=require\\(''fs''\\); const d=JSON.parse\\(fs.readFileSync\\(''C:/Users/AA/.claude/projects/c--Users-AA-jules/667731ca-504e-4f1a-ba5b-a05f5351b270/tool-results/toolu_01AmRLK7g3z4xh8Dv4C8gbDt.json'',''utf8''\\)\\); const t=d[0].text; console.log\\(t.substring\\(30000, 40000\\)\\)\")",
+      "Bash(node -e \"const fs=require\\(''fs''\\); const d=JSON.parse\\(fs.readFileSync\\(''C:/Users/AA/.claude/projects/c--Users-AA-jules/667731ca-504e-4f1a-ba5b-a05f5351b270/tool-results/toolu_01AmRLK7g3z4xh8Dv4C8gbDt.json'',''utf8''\\)\\); const t=d[0].text; console.log\\(t.substring\\(40000\\)\\)\")",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --turbopack)",
+      "Bash(yes \"n\")",
+      "Bash(npm install:*)",
+      "Bash(npx shadcn@latest init -d --style new-york --base-color neutral)",
+      "Bash(npx shadcn@latest init -d)"
+    ]
+  }
+}
