@@ -1,32 +1,25 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppProvider } from "@/components/providers/AppProvider";
 import { SkipLink } from "@/components/shared/SkipLink";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "HandiConnect | Reseau social pour le handicap",
-    template: "%s | HandiConnect",
+    default: "HandiConnect",
+    template: "%s — HandiConnect",
   },
   description:
-    "Decouvrez des activites adaptees, partagez vos experiences et connectez-vous avec des familles et etablissements engages pour le handicap.",
+    "Le reseau social qui connecte les familles en situation de handicap avec des activites et etablissements adaptes.",
 };
 
 export default function RootLayout({
@@ -37,15 +30,15 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${playfair.variable} ${sourceSans.variable} h-full antialiased`}
-      style={{ ["--font-sans" as string]: `var(--font-source-sans), "Source Sans 3", sans-serif` }}
+      className={`${jakarta.variable} h-full`}
+      style={{ ["--font-sans" as string]: `var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif` }}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-white text-foreground antialiased">
         <AppProvider>
           <TooltipProvider>
             <SkipLink />
             {children}
-            <Toaster position="bottom-right" richColors />
+            <Toaster position="top-center" richColors />
           </TooltipProvider>
         </AppProvider>
       </body>

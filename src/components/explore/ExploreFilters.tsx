@@ -124,8 +124,8 @@ function FilterContent({
                 className={cn(
                   "h-5 w-5",
                   star <= filters.minRating
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "fill-none text-muted-foreground/30"
+                    ? "fill-hc-gold text-hc-gold"
+                    : "fill-none text-hc-text-muted/30"
                 )}
                 aria-hidden="true"
               />
@@ -160,9 +160,9 @@ export function ExploreFilters(props: ExploreFiltersProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden md:block w-72 shrink-0">
-        <div className="sticky top-20 bg-card rounded-2xl border border-border/50 p-5">
-          <h2 className="text-base font-heading font-semibold text-foreground mb-4">
+      <aside className="hidden md:block w-64 shrink-0">
+        <div className="sticky top-20 rounded-xl bg-white p-5">
+          <h2 className="text-sm font-bold text-hc-text mb-4">
             Filtres
           </h2>
           <FilterContent {...props} />
@@ -174,13 +174,13 @@ export function ExploreFilters(props: ExploreFiltersProps) {
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             render={
-              <Button variant="outline" size="sm" className="gap-1.5" />
+              <button className="inline-flex items-center gap-1.5 rounded-full bg-hc-bg-secondary px-4 py-2 text-sm font-medium text-hc-text hover:bg-neutral-200 transition-colors" />
             }
           >
-            <Filter className="h-4 w-4" aria-hidden="true" />
+            <Filter className="h-3.5 w-3.5" aria-hidden="true" />
             Filtres
             {activeFilterCount > 0 && (
-              <span className="ml-1 inline-flex items-center justify-center h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs font-medium">
+              <span className="ml-0.5 inline-flex items-center justify-center h-4.5 w-4.5 rounded-full gradient-warm text-white text-[10px] font-bold">
                 {activeFilterCount}
               </span>
             )}

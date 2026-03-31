@@ -20,7 +20,7 @@ export function MessageBubble({ message, isOwn, senderName }: MessageBubbleProps
           "px-4 py-2.5 text-sm leading-relaxed break-words",
           isOwn
             ? "bg-hc-blue text-white rounded-2xl rounded-br-md"
-            : "bg-hc-cream-dark text-hc-text rounded-2xl rounded-bl-md"
+            : "bg-hc-bg-secondary text-hc-text rounded-2xl rounded-bl-md"
         )}
       >
         {message.content}

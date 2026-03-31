@@ -16,7 +16,7 @@ export function HandicapBadge({ type, className }: HandicapBadgeProps) {
       role="img"
       aria-label={`Type de handicap : ${label}`}
       className={cn(
-        "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium ring-1 ring-inset ring-current/10",
+        "inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-medium",
         colorClass,
         className
       )}

@@ -1,85 +1,67 @@
 "use client";
 
-import { Users, Compass, MessageCircle } from "lucide-react";
-
-const cards = [
+const features = [
   {
-    icon: Users,
+    number: "01",
     title: "Partagez vos experiences",
-    desc: "Rejoignez une communaute bienveillante de familles qui partagent leurs decouvertes, conseils et retours d'experience.",
-    accentColor: "bg-hc-blue",
-    iconBg: "bg-hc-blue-muted",
-    iconColor: "text-hc-blue",
+    description:
+      "Publiez vos sorties, photos et videos. Racontez ce qui a marche (ou pas) pour aider d'autres familles a se lancer.",
   },
   {
-    icon: Compass,
-    title: "Trouvez des lieux adaptes",
-    desc: "Decouvrez des etablissements testes et approuves par des familles partageant les memes besoins que les votres.",
-    accentColor: "bg-hc-orange",
-    iconBg: "bg-hc-orange-muted",
-    iconColor: "text-hc-orange",
+    number: "02",
+    title: "Decouvrez des lieux adaptes",
+    description:
+      "Trouvez des activites et etablissements filtres par type de handicap. Fini les mauvaises surprises a l'arrivee.",
   },
   {
-    icon: MessageCircle,
-    title: "Connectez-vous entre familles",
-    desc: "Discutez avec d'autres familles et des professionnels engages pour l'inclusion au quotidien.",
-    accentColor: "bg-hc-sage",
-    iconBg: "bg-hc-sage-muted",
-    iconColor: "text-hc-sage",
+    number: "03",
+    title: "Reservez en confiance",
+    description:
+      "Consultez les avis verifies de la communaute et reservez directement. Simple, transparent, sans stress.",
   },
 ] as const;
 
 export function ValuePropSection() {
   return (
-    <section className="py-28 px-4 bg-white/80">
+    <section className="py-24 px-4 bg-hc-bg-secondary">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="text-center">
-          <span className="uppercase tracking-widest text-xs text-hc-sage font-semibold">
-            Notre mission
-          </span>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-hc-text mt-3">
-            Pourquoi HandiConnect ?
-          </h2>
-        </div>
+        {/* Eyebrow */}
+        <p className="text-xs font-semibold uppercase tracking-widest text-hc-text-muted text-center">
+          Comment ca marche
+        </p>
 
-        {/* Editorial diamond divider */}
-        <div className="divider-editorial" />
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-extrabold text-hc-text text-center mt-4">
+          Simple comme un fil d&apos;actu
+        </h2>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {cards.map((card, index) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={card.title}
-                className="card-editorial card-hover p-8 relative overflow-hidden animate-fade-in-up"
-                style={{ animationDelay: `${(index + 1) * 0.08}s` }}
-              >
-                {/* Top accent bar */}
-                <div
-                  className={`absolute top-0 left-0 right-0 h-1 ${card.accentColor}`}
-                />
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+          {features.map((f, index) => (
+            <div
+              key={f.number}
+              className="bg-white rounded-2xl p-8 card-hover animate-fade-in-up"
+              style={{
+                animationDelay: `${(index + 1) * 0.1}s`,
+                boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02)",
+              }}
+            >
+              {/* Big number */}
+              <span className="text-5xl font-extrabold text-gradient-warm leading-none">
+                {f.number}
+              </span>
 
-                {/* Icon */}
-                <div
-                  className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${card.iconBg} ${card.iconColor} mb-6`}
-                >
-                  <Icon className="w-7 h-7" />
-                </div>
+              {/* Title */}
+              <h3 className="font-bold text-lg text-hc-text mt-5 mb-3">
+                {f.title}
+              </h3>
 
-                {/* Title */}
-                <h3 className="font-heading text-xl font-semibold text-hc-text mb-3">
-                  {card.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-hc-text-light leading-relaxed">
-                  {card.desc}
-                </p>
-              </div>
-            );
-          })}
+              {/* Description */}
+              <p className="text-hc-text-secondary text-sm leading-relaxed">
+                {f.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

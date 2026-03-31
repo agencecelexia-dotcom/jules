@@ -13,16 +13,16 @@ export const HANDICAP_LABELS: Record<HandicapType, string> = {
   AUTRE: "Autre",
 };
 
-/** Tailwind classes for handicap badges — all pairs pass WCAG AA contrast */
+/** Tailwind classes for handicap badges — subtle Instagram-hashtag style */
 export const HANDICAP_COLORS: Record<HandicapType, string> = {
-  MOTEUR: "bg-blue-100 text-blue-800",
-  VISUEL: "bg-purple-100 text-purple-800",
-  AUDITIF: "bg-amber-100 text-amber-800",
-  MENTAL: "bg-green-100 text-green-800",
-  PSYCHIQUE: "bg-rose-100 text-rose-800",
-  COGNITIF: "bg-cyan-100 text-cyan-800",
-  POLYHANDICAP: "bg-orange-100 text-orange-800",
-  AUTRE: "bg-gray-100 text-gray-800",
+  MOTEUR: "bg-blue-50 text-blue-500",
+  VISUEL: "bg-purple-50 text-purple-500",
+  AUDITIF: "bg-amber-50 text-amber-500",
+  MENTAL: "bg-emerald-50 text-emerald-500",
+  PSYCHIQUE: "bg-rose-50 text-rose-500",
+  COGNITIF: "bg-cyan-50 text-cyan-500",
+  POLYHANDICAP: "bg-orange-50 text-orange-500",
+  AUTRE: "bg-neutral-100 text-neutral-500",
 };
 
 // --- Business categories ---
@@ -67,10 +67,10 @@ export const BOOKING_STATUS_LABELS: Record<BookingStatus, string> = {
 };
 
 export const BOOKING_STATUS_COLORS: Record<BookingStatus, string> = {
-  PENDING: "bg-yellow-100 text-yellow-800",
-  CONFIRMED: "bg-green-100 text-green-800",
-  CANCELLED: "bg-red-100 text-red-800",
-  COMPLETED: "bg-blue-100 text-blue-800",
+  PENDING: "bg-amber-50 text-amber-600",
+  CONFIRMED: "bg-emerald-50 text-emerald-600",
+  CANCELLED: "bg-red-50 text-red-600",
+  COMPLETED: "bg-blue-50 text-blue-600",
 };
 
 // --- Activity types (for post activity-type filter) ---

@@ -18,27 +18,34 @@ export function LikeButton({ postId, likesCount }: LikeButtonProps) {
   const handleClick = useCallback(() => {
     toggleLike(postId);
     setAnimating(true);
-    setTimeout(() => setAnimating(false), 300);
+    setTimeout(() => setAnimating(false), 400);
   }, [postId, toggleLike]);
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      aria-pressed={isLiked}
-      aria-label={`J'aime (${likesCount})`}
-      className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-red-500 transition-colors"
-    >
-      <Heart
-        className={cn(
-          "size-5 transition-colors",
-          isLiked && "fill-red-500 text-red-500",
-          animating && "animate-like-pulse"
-        )}
-      />
+    <div className="flex flex-col">
+      <button
+        type="button"
+        onClick={handleClick}
+        aria-pressed={isLiked}
+        aria-label={`J'aime (${likesCount})`}
+        className="inline-flex items-center text-hc-text hover:text-hc-red transition-colors"
+      >
+        <Heart
+          className={cn(
+            "size-6 transition-all",
+            isLiked && "fill-hc-red text-hc-red",
+            animating && "animate-like-pulse"
+          )}
+        />
+      </button>
       {likesCount > 0 && (
-        <span className={cn(isLiked && "text-red-500")}>{likesCount}</span>
+        <span className={cn(
+          "text-sm font-semibold mt-1",
+          isLiked ? "text-hc-red" : "text-hc-text"
+        )}>
+          {likesCount} J&apos;aime
+        </span>
       )}
-    </button>
+    </div>
   );
 }

@@ -6,7 +6,7 @@ import type { HandicapType, PostType } from "@/lib/types";
 import { HANDICAP_LABELS, POST_TYPE_LABELS } from "@/lib/constants";
 import { cn, getInitials } from "@/lib/utils";
 import { toast } from "sonner";
-import { Send } from "lucide-react";
+import { ImageIcon, Tag, MapPin } from "lucide-react";
 
 const HANDICAP_TYPES: HandicapType[] = [
   "MOTEUR",
@@ -28,6 +28,7 @@ export function PostForm() {
   const [content, setContent] = useState("");
   const [selectedTags, setSelectedTags] = useState<HandicapType[]>([]);
   const [postType, setPostType] = useState<PostType>("EXPERIENCE");
+  const [showOptions, setShowOptions] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const toggleTag = useCallback((tag: HandicapType) => {
@@ -53,6 +54,7 @@ export function PostForm() {
       setContent("");
       setSelectedTags([]);
       setPostType("EXPERIENCE");
+      setShowOptions(false);
       toast("Publication creee !");
     },
     [content, selectedTags, postType, currentUser.id, addPost]
@@ -64,23 +66,22 @@ export function PostForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="card-editorial rounded-2xl p-6 shadow-sm"
+      className="card-social p-4"
     >
       <div className="flex gap-3">
-        {/* Avatar */}
-        <div
-          className="flex-shrink-0 w-10 h-10 rounded-full bg-hc-blue text-white flex items-center justify-center text-sm font-semibold"
-          aria-hidden="true"
-        >
-          {currentUser.avatar ? (
-            <img
-              src={currentUser.avatar}
-              alt=""
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          ) : (
-            getInitials(currentUser.name)
-          )}
+        {/* Avatar in gradient ring */}
+        <div className="flex-shrink-0 avatar-ring" aria-hidden="true">
+          <div className="w-8 h-8 rounded-full bg-hc-bg-secondary text-hc-text flex items-center justify-center text-xs font-semibold">
+            {currentUser.avatar ? (
+              <img
+                src={currentUser.avatar}
+                alt=""
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              getInitials(currentUser.name)
+            )}
+          </div>
         </div>
 
         {/* Content area */}
@@ -93,8 +94,9 @@ export function PostForm() {
                 setContent(e.target.value);
               }
             }}
-            placeholder="Quoi de neuf ? Partagez votre experience..."
-            className="w-full resize-none bg-transparent border-none outline-none text-sm placeholder:text-muted-foreground min-h-[60px] field-sizing-content"
+            onFocus={() => setShowOptions(true)}
+            placeholder="Quoi de neuf ?"
+            className="w-full resize-none bg-transparent border-none outline-none text-sm placeholder:text-hc-text-muted min-h-[40px] field-sizing-content"
             rows={2}
             aria-label="Contenu de la publication"
           />
@@ -104,65 +106,81 @@ export function PostForm() {
             <p
               className={cn(
                 "text-xs text-right mt-1",
-                charCount >= MAX_CHARS ? "text-hc-error" : "text-muted-foreground"
+                charCount >= MAX_CHARS ? "text-hc-red" : "text-hc-text-muted"
               )}
             >
               {charCount} / {MAX_CHARS}
             </p>
           )}
 
-          {/* Post type pills */}
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {POST_TYPES.map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => setPostType(type)}
-                className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium transition-colors",
-                  postType === type
-                    ? "bg-hc-blue text-white"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                )}
-              >
-                {POST_TYPE_LABELS[type]}
-              </button>
-            ))}
-          </div>
+          {/* Expanded options */}
+          {showOptions && (
+            <>
+              {/* Post type pills */}
+              <div className="flex flex-wrap gap-1.5 mt-3">
+                {POST_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setPostType(type)}
+                    className={cn(
+                      "rounded-full px-3 py-1 text-xs font-medium transition-colors",
+                      postType === type
+                        ? "gradient-warm text-white"
+                        : "bg-hc-bg-secondary text-hc-text-secondary hover:bg-hc-border"
+                    )}
+                  >
+                    {POST_TYPE_LABELS[type]}
+                  </button>
+                ))}
+              </div>
 
-          {/* Handicap tag selector */}
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {HANDICAP_TYPES.map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => toggleTag(type)}
-                aria-pressed={selectedTags.includes(type)}
-                className={cn(
-                  "rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors border",
-                  selectedTags.includes(type)
-                    ? "bg-hc-blue text-white border-hc-blue"
-                    : "bg-white text-muted-foreground border-border hover:bg-muted"
-                )}
-              >
-                {HANDICAP_LABELS[type]}
-              </button>
-            ))}
-          </div>
+              {/* Handicap tag selector */}
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {HANDICAP_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => toggleTag(type)}
+                    aria-pressed={selectedTags.includes(type)}
+                    className={cn(
+                      "rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors",
+                      selectedTags.includes(type)
+                        ? "gradient-warm text-white"
+                        : "bg-hc-bg-secondary text-hc-text-muted hover:bg-hc-border"
+                    )}
+                  >
+                    {HANDICAP_LABELS[type]}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
-          {/* Submit */}
-          <div className="flex justify-end mt-3">
+          {/* Bottom row: action icons + submit */}
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center gap-3">
+              <button type="button" className="text-hc-text-muted hover:text-hc-text transition-colors" aria-label="Ajouter une image">
+                <ImageIcon className="size-5" />
+              </button>
+              <button type="button" className="text-hc-text-muted hover:text-hc-text transition-colors" aria-label="Ajouter un tag">
+                <Tag className="size-5" />
+              </button>
+              <button type="button" className="text-hc-text-muted hover:text-hc-text transition-colors" aria-label="Ajouter un lieu">
+                <MapPin className="size-5" />
+              </button>
+            </div>
+
             <button
               type="submit"
               disabled={!content.trim()}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-colors",
+                "rounded-full px-5 py-2 text-sm font-semibold transition-all",
                 content.trim()
-                  ? "bg-hc-blue text-white hover:bg-hc-blue-dark"
-                  : "bg-muted text-muted-foreground cursor-not-allowed"
+                  ? "gradient-warm text-white shadow-sm hover:shadow-md"
+                  : "bg-hc-bg-secondary text-hc-text-muted cursor-not-allowed"
               )}
             >
-              <Send className="size-4" />
               Publier
             </button>
           </div>

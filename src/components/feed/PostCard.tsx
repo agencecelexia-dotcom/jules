@@ -3,7 +3,6 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import type { Post } from "@/lib/types";
-import { POST_TYPE_LABELS } from "@/lib/constants";
 import { cn, formatDate, getInitials, truncateText } from "@/lib/utils";
 import { useApp } from "@/components/providers/AppProvider";
 import { HandicapBadge } from "@/components/shared/HandicapBadge";
@@ -40,49 +39,41 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
   return (
     <article
       aria-label={`Publication de ${author?.name ?? "Utilisateur"}`}
-      className="card-editorial p-6"
+      className="border-b border-hc-border pb-4 mb-4"
     >
       {/* Header */}
-      <div className="flex items-start gap-3">
-        {/* Avatar */}
+      <div className="flex items-center gap-3">
+        {/* Avatar in gradient ring */}
         <Link
           href={`/profil/${post.authorId}`}
           className="flex-shrink-0"
           aria-label={`Profil de ${author?.name ?? "Utilisateur"}`}
         >
-          <div className="w-10 h-10 rounded-full bg-hc-blue text-white flex items-center justify-center text-sm font-semibold">
-            {author?.avatar ? (
-              <img
-                src={author.avatar}
-                alt=""
-                className="w-10 h-10 rounded-full object-cover"
-              />
-            ) : (
-              getInitials(author?.name ?? "??")
-            )}
+          <div className="avatar-ring">
+            <div className="w-9 h-9 rounded-full bg-hc-bg-secondary text-hc-text flex items-center justify-center text-xs font-semibold">
+              {author?.avatar ? (
+                <img
+                  src={author.avatar}
+                  alt=""
+                  className="w-9 h-9 rounded-full object-cover"
+                />
+              ) : (
+                getInitials(author?.name ?? "??")
+              )}
+            </div>
           </div>
         </Link>
 
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Link
-              href={`/profil/${post.authorId}`}
-              className="font-semibold text-[15px] hover:underline text-hc-text"
-            >
-              {author?.name ?? "Utilisateur"}
-            </Link>
-            <span className={cn(
-              "inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium",
-              post.type === "EXPERIENCE" || post.type === "STORY"
-                ? "bg-hc-orange-muted text-hc-orange"
-                : "bg-hc-blue-muted text-hc-blue"
-            )}>
-              {POST_TYPE_LABELS[post.type]}
-            </span>
-          </div>
+          <Link
+            href={`/profil/${post.authorId}`}
+            className="font-semibold text-sm hover:underline text-hc-text"
+          >
+            {author?.name ?? "Utilisateur"}
+          </Link>
           <Link
             href={`/fil/${post.id}`}
-            className="text-xs text-hc-text-muted hover:underline"
+            className="block text-xs text-hc-text-muted hover:underline"
           >
             {formatDate(post.createdAt)}
           </Link>
@@ -91,12 +82,12 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
 
       {/* Content */}
       <div className="mt-3">
-        <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{displayContent}</p>
+        <p className="text-sm leading-relaxed whitespace-pre-wrap">{displayContent}</p>
         {needsTruncation && !expanded && (
           <button
             type="button"
             onClick={() => setExpanded(true)}
-            className="text-sm text-hc-blue hover:underline mt-1 font-medium"
+            className="text-sm text-hc-text-muted hover:text-hc-text mt-1 font-medium"
           >
             Voir plus
           </button>
@@ -107,7 +98,7 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
       {post.media.length > 0 && (
         <div
           className={cn(
-            "mt-3 gap-1 rounded-xl overflow-hidden",
+            "mt-3 gap-1 rounded-xl overflow-hidden -mx-0",
             post.media.length === 1 && "grid grid-cols-1",
             post.media.length === 2 && "grid grid-cols-2",
             post.media.length === 3 && "grid grid-cols-2 grid-rows-2",
@@ -118,7 +109,7 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
             <div
               key={index}
               className={cn(
-                "relative overflow-hidden bg-muted",
+                "relative overflow-hidden bg-hc-bg-secondary",
                 post.media.length === 1 && "aspect-video rounded-xl",
                 post.media.length === 2 && "aspect-square rounded-xl",
                 post.media.length === 3 &&
@@ -155,46 +146,56 @@ export function PostCard({ post, showFullContent = false }: PostCardProps) {
         </div>
       )}
 
-      {/* Handicap tags */}
+      {/* Handicap badges — subtle and small */}
       {post.handicapTags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-3">
+        <div className="flex flex-wrap gap-1 mt-3">
           {post.handicapTags.map((tag) => (
-            <HandicapBadge key={tag} type={tag} />
+            <HandicapBadge key={tag} type={tag} className="text-[10px] px-2 py-0.5" />
           ))}
         </div>
       )}
 
       {/* Location */}
       {post.location && (
-        <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-1 mt-2 text-xs text-hc-text-muted">
           <MapPin className="size-3.5" />
           <span>{post.location}</span>
         </div>
       )}
 
-      {/* Footer actions */}
-      <div className="flex items-center gap-4 mt-4 pt-3 border-t border-border/50">
+      {/* Footer — Instagram-style icon row */}
+      <div className="flex items-center gap-4 mt-3">
         <LikeButton postId={post.id} likesCount={post.likesCount} />
 
         <button
           type="button"
           onClick={() => setShowComments(!showComments)}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center text-hc-text hover:text-hc-text-secondary transition-colors"
           aria-label={`Commentaires (${post.commentsCount})`}
         >
-          <MessageCircle className="size-5" />
-          {post.commentsCount > 0 && <span>{post.commentsCount}</span>}
+          <MessageCircle className="size-6" />
         </button>
 
         <button
           type="button"
           onClick={handleShare}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center text-hc-text hover:text-hc-text-secondary transition-colors"
           aria-label="Copier le lien"
         >
-          <LinkIcon className="size-5" />
+          <LinkIcon className="size-6" />
         </button>
       </div>
+
+      {/* Comment count link */}
+      {post.commentsCount > 0 && !showComments && !showFullContent && (
+        <button
+          type="button"
+          onClick={() => setShowComments(true)}
+          className="text-sm text-hc-text-muted mt-1 hover:text-hc-text-secondary"
+        >
+          Voir les {post.commentsCount} commentaire{post.commentsCount > 1 ? "s" : ""}
+        </button>
+      )}
 
       {/* Comments section */}
       {(showComments || showFullContent) && (

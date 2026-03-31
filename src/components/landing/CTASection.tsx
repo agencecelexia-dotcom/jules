@@ -4,29 +4,21 @@ import Link from "next/link";
 
 export function CTASection() {
   return (
-    <section className="relative py-20 px-4 bg-hc-blue overflow-hidden">
-      {/* Subtle dot pattern overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.07]"
-        aria-hidden="true"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, #FEFCF9 1px, transparent 1px)",
-          backgroundSize: "24px 24px",
-        }}
-      />
+    <section className="py-20 px-4 gradient-warm relative overflow-hidden">
+      {/* Subtle decorative circles */}
+      <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/10 -translate-y-1/2 translate-x-1/3" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/10 translate-y-1/3 -translate-x-1/4" aria-hidden="true" />
 
       <div className="relative z-10 max-w-2xl mx-auto text-center">
-        <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-6">
+        <h2 className="font-extrabold text-3xl md:text-4xl text-white mb-4">
           Pret a rejoindre la communaute ?
         </h2>
-        <p className="text-lg text-white/80 mb-10 leading-relaxed">
-          Creez votre compte gratuitement et decouvrez une communaute engagee
-          pour l'inclusion.
+        <p className="text-white/80 text-lg mb-10 leading-relaxed">
+          Gratuit, bienveillant, fait pour vous.
         </p>
         <Link
           href="/connexion"
-          className="inline-flex items-center justify-center rounded-full bg-white text-hc-blue px-10 py-4 font-semibold shadow-lg hover:shadow-xl hover:bg-hc-cream transition-all"
+          className="inline-flex items-center justify-center bg-white text-hc-text rounded-full px-10 py-4 font-bold shadow-lg hover:shadow-xl transition-shadow"
         >
           Creer mon compte gratuitement
         </Link>

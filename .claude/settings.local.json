@@ -43,7 +43,12 @@
       "Bash(git -C /c/Users/AA/jules log --oneline -5)",
       "Bash(git -C /c/Users/AA/jules diff --stat)",
       "Bash(git -C /c/Users/AA/jules add src/ package.json package-lock.json components.json)",
-      "Bash(git -C /c/Users/AA/jules add .claude/settings.local.json)"
+      "Bash(git -C /c/Users/AA/jules add .claude/settings.local.json)",
+      "Bash(git -C:*)",
+      "Bash(dev-browser install:*)",
+      "WebFetch(domain:www.mobbin.com)",
+      "WebFetch(domain:uxdesign.cc)",
+      "WebFetch(domain:medium.com)"
     ],
     "additionalDirectories": [
       "C:\\Users\\AA\\jules\\src\\lib",

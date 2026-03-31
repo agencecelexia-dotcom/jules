@@ -37,21 +37,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     <div className="max-w-3xl mx-auto space-y-6">
       <ProfileHeader user={user} />
 
-      <hr className="border-border" />
-
-      {/* Handicap badges for family profiles */}
-      {isFamily && user.familyProfile && user.familyProfile.handicapTypes.length > 0 && (
-        <div className="card-editorial card-accent-sage p-5 space-y-3">
-          <h2 className="text-sm font-heading font-semibold text-foreground">
-            Types de handicap concernes
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {user.familyProfile.handicapTypes.map((type) => (
-              <HandicapBadge key={type} type={type} />
-            ))}
-          </div>
-        </div>
-      )}
+      <hr className="border-hc-border" />
 
       {/* Category & verified badges for business profiles */}
       {isBusiness && user.businessProfile && (
@@ -69,9 +55,9 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             );
           })}
           {user.businessProfile.isVerified && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 text-green-700 px-3 py-1 text-sm font-semibold">
-              <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-              Etablissement verifie
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-600 px-3 py-1 text-xs font-medium">
+              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+              Verifie
             </span>
           )}
           {user.businessProfile.handicapTypesSupported.length > 0 && (

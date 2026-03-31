@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search } from "lucide-react";
 import { useApp } from "@/components/providers/AppProvider";
 import {
   ExploreFilters,
@@ -86,13 +85,12 @@ export default function ExplorerPage() {
   return (
     <div className="space-y-6">
       {/* Page header */}
-      <div className="space-y-2">
-        <h1 className="text-2xl font-heading font-bold text-foreground flex items-center gap-2">
-          <Search className="h-6 w-6 text-primary" aria-hidden="true" />
-          Explorer les etablissements
+      <div className="space-y-1">
+        <h1 className="text-2xl font-extrabold text-hc-text">
+          Explorer
         </h1>
-        <p className="text-sm text-muted-foreground">
-          Decouvrez des lieux et activites accessibles adaptes a vos besoins
+        <p className="text-sm text-hc-text-muted">
+          Decouvrez des lieux et activites accessibles
         </p>
       </div>
 
@@ -108,25 +106,12 @@ export default function ExplorerPage() {
         />
 
         <div className="flex-1 min-w-0">
-          {/* Mobile filter trigger is inside ExploreFilters, show above grid on mobile */}
-          <div className="md:hidden mb-4">
-            {/* The Sheet trigger renders itself here via ExploreFilters */}
-          </div>
-
           {/* Result count */}
           <div className="mb-4">
-            <p className="text-sm text-foreground">
+            <p className="text-sm text-hc-text">
               <span className="font-bold text-lg">{filteredBusinesses.length}</span>{" "}
-              {filteredBusinesses.length <= 1 ? "etablissement trouve" : "etablissements trouves"}
+              {filteredBusinesses.length <= 1 ? "etablissement" : "etablissements"}
             </p>
-            {filters.handicapTypes.length === 0 &&
-              filters.category === "all" &&
-              !filters.department.trim() &&
-              filters.minRating === 0 && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Utilisez les filtres pour affiner votre recherche
-                </p>
-              )}
           </div>
 
           <BusinessGrid businesses={filteredBusinesses} />

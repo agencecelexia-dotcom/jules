@@ -25,7 +25,7 @@ export function FeedFilters({ activeFilter, onFilterChange }: FeedFiltersProps) 
     <div
       role="group"
       aria-label="Filtrer par type de handicap"
-      className="overflow-x-auto flex gap-2 pb-2"
+      className="overflow-x-auto flex gap-2 pb-2 scrollbar-hide"
     >
       <button
         type="button"
@@ -34,8 +34,8 @@ export function FeedFilters({ activeFilter, onFilterChange }: FeedFiltersProps) 
         className={cn(
           "rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
           activeFilter === null
-            ? "bg-hc-blue text-white"
-            : "bg-card border border-border text-foreground hover:bg-muted"
+            ? "gradient-warm text-white"
+            : "bg-hc-bg-secondary text-hc-text-secondary border-none hover:bg-hc-border"
         )}
       >
         Tout
@@ -49,8 +49,8 @@ export function FeedFilters({ activeFilter, onFilterChange }: FeedFiltersProps) 
           className={cn(
             "rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
             activeFilter === type
-              ? "bg-hc-blue text-white"
-              : "bg-card border border-border text-foreground hover:bg-muted"
+              ? "gradient-warm text-white"
+              : "bg-hc-bg-secondary text-hc-text-secondary border-none hover:bg-hc-border"
           )}
         >
           {HANDICAP_LABELS[type]}
